@@ -1,0 +1,283 @@
+@import "tailwindcss";
+
+/* ============================================================
+   NOTENRA COLOR SYSTEM
+
+   Why this palette: the previous one sat entirely between hue
+   197-257 (all cool blue-cyan) at chroma 0.04-0.09. A page with
+   no hue variety and uniformly low chroma reads as flat - that
+   was the "dull" problem, and no amount of shade-tweaking inside
+   the blue family fixes it.
+
+   Teal is inherently a low-chroma hue in sRGB (you cannot exceed
+   ~C 0.10 at mid-lightness), so vibrancy has to come from a
+   second, warm hue. Coral sits ~175 degrees opposite the brand
+   teal, which is why it lifts the whole page while staying in
+   the vocabulary healthcare brands already use.
+
+   Every value below is contrast-checked against the surface it
+   is actually used on.
+   ============================================================ */
+
+@theme {
+  /* --- Neutrals -------------------------------------------------
+     Tailwind's stock slate is a cool near-grey (chroma 0.037) and
+     it covers most of the page: body copy, borders, panels. That
+     grey was diluting the brand. This retints the entire slate
+     ramp into the brand's navy family, so every existing
+     slate-* class across the codebase inherits the brand hue
+     without touching a single component. */
+  /* Light end is NEUTRAL grey, not brand-tinted. Backgrounds and hairlines
+     carrying a hue is what made the page read as cool/foggy rather than
+     clean — the brand belongs in the ink and the accents, not the paper. */
+  --color-slate-50: #F8F9FA;
+  --color-slate-100: #F1F3F5;
+  --color-slate-200: #DFE2E6; /* the default hairline — solid, never /80 */
+  --color-slate-300: #C8CDD2;
+  /* Mid and dark end stay navy-tinted: that is type colour, not ground. */
+  --color-slate-400: #8DA5B8;
+  --color-slate-500: #5F778F; /* 4.64:1 on white - safe for small text */
+  --color-slate-600: #456179; /* 6.48:1 - body copy */
+  --color-slate-700: #33506A;
+  --color-slate-800: #23405A;
+  --color-slate-900: #0F3355;
+
+  /* --- Brand ----------------------------------------------------
+     Primary pulled back to hue 206 to match the logo's teal (205).
+     The old #0E7C93 had drifted to hue 217 - steel blue, not teal. */
+  --color-brand-teal: #007F8B; /* 4.76:1 white / 4.50:1 slate-50 */
+  --color-brand-teal-deep: #006472;
+  /* Solid teal hairlines. Previously these were the brand teal at 15-50%
+     alpha, which over a tinted surface never resolves into a clean line —
+     it just hazes the edge. Opaque values read sharp at 1px. */
+  --color-brand-teal-50: #E6F3F5; /* light tile ground — pair with teal-deep text */
+  --color-brand-teal-100: #C2DEE2;
+  --color-brand-teal-200: #93C6CD;
+  --color-brand-aqua: #4ACCCE; /* logo pulse - dark surfaces only */
+  --color-brand-ink: #0F3355; /* headings, 12.9:1 */
+  --color-brand-navy: #0C3050; /* flat dark panel, 13.5:1 */
+
+  /* --- Coral accent ---------------------------------------------
+     The hue break that makes the page feel alive. Deliberately
+     rationed: accent marks, large figures, dark-panel highlights.
+     Note it can NEVER carry white text - coral bright enough to
+     read as coral tops out at 3.9:1 - so it is not a button fill
+     unless the label is ink. */
+  --color-coral: #FF7A5C; /* on navy 5.27:1 | with ink text 5.04:1 */
+  --color-coral-600: #DE5340; /* large text on white 3.88:1 */
+  --color-coral-700: #B23A28; /* small text on coral-50 5.23:1 */
+  --color-coral-100: #FFDCD3;
+  --color-coral-50: #FDEDE9;
+
+  /* --- Supporting ----------------------------------------------- */
+  --color-mint: #0F9B76; /* verified / positive, large text only */
+  --color-mint-700: #0B7A5C; /* 5.42:1 - small text */
+  --color-mint-100: #C6E9DB;
+  --color-mint-50: #E8F7F1;
+}
+
+@layer base {
+  :root {
+    /* Logo artwork colors - reserved for the mark itself */
+    --brand-navy: #0A2B4B;
+    --brand-teal: #098E9A;
+    --brand-teal-light: #4ACCCE;
+
+    --ink: #0F3355;
+    --ink-soft: #33506A;
+    --ink-muted: #5F778F;
+
+    --cyan-primary: #007F8B;
+    --cyan-accent: #4ACCCE;
+    --coral-accent: #FF7A5C;
+
+    --bg-light: #FFFFFF;
+    --bg-slate: #F5F9FB;
+    --bg-tint: #F1F8F9;
+    --border-subtle: rgba(15, 51, 85, 0.09);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-jakarta), var(--font-manrope), system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    background-color: var(--bg-light);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    overflow-x: hidden;
+    color: var(--ink);
+    background-color: var(--bg-light);
+  }
+}
+
+/* ============================================================
+   SURFACES
+   Flat fills, not gradients. A gradient across a large panel
+   averages out to mud and costs the shape its crisp edge; solid
+   brand color reads cleaner and more confident at every size.
+   ============================================================ */
+
+.surface-navy {
+  background-color: #0C3050;
+}
+
+.surface-teal {
+  background-color: #007F8B;
+}
+
+/* Section grounds are plain white. Alternating bands are separated by a
+   1px hairline and whitespace instead of a tint — tinted bands are what
+   made the page feel washed rather than crisp. Inner panels that need to
+   sit back from the page use the neutral bg-slate-50. */
+
+/* ============================================================
+   GLASS
+   ============================================================ */
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.75);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 20px 40px -15px rgba(15, 51, 85, 0.06),
+              0 0 1px 1px rgba(255, 255, 255, 0.9) inset;
+}
+
+.glass-panel-dark {
+  background: rgba(12, 48, 80, 0.9);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 24px 50px -22px rgba(12, 48, 80, 0.4);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.65);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(15, 51, 85, 0.08);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(0, 127, 139, 0.32);
+  box-shadow: 0 24px 48px -12px rgba(0, 127, 139, 0.14);
+  transform: translateY(-3px);
+}
+
+/* ============================================================
+   ACCENTS
+   ============================================================ */
+
+/* Replaces the old 3-stop gradient headline text. Solid color
+   keeps the letterforms sharp and the emphasis unambiguous. */
+.text-accent {
+  color: #007F8B;
+}
+
+.text-accent-warm {
+  color: #DE5340;
+}
+
+/* Warm underline stroke beneath an emphasised headline phrase.
+   Kept to the bottom ~12% of the line box: any taller and it reads as
+   a highlighter block rather than an underline, which looks crude when
+   the phrase wraps across two lines. */
+.accent-underline {
+  background-image: linear-gradient(transparent 86%, rgba(255, 122, 92, 0.55) 86%);
+  background-repeat: no-repeat;
+  padding-bottom: 0.06em;
+}
+
+/* Single retained atmospheric gradient. Radial falloff on a
+   background is the one place a gradient earns its keep. */
+.bg-radial-glow {
+  background: radial-gradient(circle at 50% 25%, rgba(0, 127, 139, 0.09) 0%, rgba(74, 204, 206, 0.04) 45%, transparent 70%);
+}
+
+.bg-hero-grid {
+  background-image: radial-gradient(rgba(60, 64, 67, 0.055) 1.5px, transparent 1.5px);
+  background-size: 32px 32px;
+}
+
+/* ============================================================
+   ANIMATION
+   ============================================================ */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(0.5deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(1.04); }
+}
+
+.animate-float {
+  animation: float 8s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 7s ease-in-out infinite;
+}
+
+/* Buttery-smooth audio waveform bars - GPU-composited transform only,
+   no JS/React state driving it, so it never stutters on re-render. */
+@keyframes audioWave {
+  0%, 100% { transform: scaleY(var(--wave-min, 0.28)); }
+  50% { transform: scaleY(var(--wave-max, 1)); }
+}
+
+.animate-audio-wave {
+  animation-name: audioWave;
+  animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+  animation-iteration-count: infinite;
+  transform-origin: center;    /* expand symmetrically up & down from midline */
+  will-change: transform;
+}
+
+/* Continuous trust-strip marquee. Track is doubled in markup so the
+   -50% loop point is seamless. */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-pulse-glow,
+  .animate-audio-wave,
+  .animate-marquee {
+    animation: none;
+  }
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F5F9FB;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(15, 51, 85, 0.18);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 127, 139, 0.42);
+}

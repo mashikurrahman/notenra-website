@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* Official logo colors - reserved for the mark itself and deep accents */
+    --brand-navy: #0A2B4B;
+    --brand-teal: #098E9A;
+    --brand-teal-light: #4ACCCE;
+
+    /* UI ink - deliberately lighter than the logo navy so large surfaces
+       and body copy read as calm rather than heavy */
+    --ink: #1B3F60;
+    --ink-soft: #2E5375;
+    --ink-muted: #5A748F;
+
+    --cyan-primary: #0E7C93;
+    --cyan-accent: #4ACCCE;
+    --coral-accent: #F27A6B;
+
+    --bg-light: #FFFFFF;
+    --bg-slate: #F8FAFC;
+    --bg-tint: #F3F9FB;
+    --border-subtle: rgba(27, 63, 96, 0.08);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-jakarta), var(--font-manrope), system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    background-color: var(--bg-light);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    overflow-x: hidden;
+    color: var(--ink);
+    background-color: var(--bg-light);
+  }
+}
+
+/* Glassmorphism & Custom Styling */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.75);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 20px 40px -15px rgba(27, 63, 96, 0.05),
+              0 0 1px 1px rgba(255, 255, 255, 0.9) inset;
+}
+
+.glass-panel-dark {
+  background: rgba(22, 69, 106, 0.88);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 24px 50px -22px rgba(14, 85, 104, 0.35);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.65);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(27, 63, 96, 0.08);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(14, 124, 147, 0.3);
+  box-shadow: 0 24px 48px -12px rgba(14, 124, 147, 0.12),
+              0 0 24px 0 rgba(74, 204, 206, 0.15);
+  transform: translateY(-3px);
+}
+
+/* Gradients
+   The "navy" surface is a lighter, teal-shifted brand navy so dark blocks
+   anchor the layout without dominating it. */
+.bg-gradient-navy {
+  background: linear-gradient(135deg, #16456A 0%, #103A5C 50%, #0E5568 100%);
+}
+
+.bg-gradient-cyan {
+  background: linear-gradient(135deg, #0E7C93 0%, #4ACCCE 100%);
+}
+
+/* Light, teal-tinted surface used where a dark panel would over-weight the page */
+.bg-surface-teal {
+  background: linear-gradient(150deg, #FBFEFE 0%, #F1FAFB 45%, #EAF5F9 100%);
+}
+
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #1B3F60 20%, #0E7C93 60%, #4ACCCE 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-accent {
+  background: linear-gradient(135deg, #0E7C93 0%, #4ACCCE 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-radial-glow {
+  background: radial-gradient(circle at 50% 25%, rgba(74, 204, 206, 0.14) 0%, rgba(14, 124, 147, 0.04) 45%, transparent 70%);
+}
+
+.bg-hero-grid {
+  background-image: radial-gradient(rgba(27, 63, 96, 0.045) 1.5px, transparent 1.5px);
+  background-size: 32px 32px;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(0.5deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(1.04); }
+}
+
+.animate-float {
+  animation: float 8s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 7s ease-in-out infinite;
+}
+
+/* Buttery-smooth audio waveform bars - GPU-composited transform only,
+   no JS/React state driving it, so it never stutters on re-render. */
+@keyframes audioWave {
+  0%, 100% { transform: scaleY(var(--wave-min, 0.28)); }
+  50% { transform: scaleY(var(--wave-max, 1)); }
+}
+
+.animate-audio-wave {
+  animation-name: audioWave;
+  animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+  animation-iteration-count: infinite;
+  transform-origin: center;    /* expand symmetrically up & down from midline */
+  will-change: transform;
+}
+
+/* Continuous trust-strip marquee. Track is doubled in markup so the
+   -50% loop point is seamless. */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Scrollbar refinement */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F8FAFC;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(27, 63, 96, 0.18);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(14, 124, 147, 0.4);
+}
