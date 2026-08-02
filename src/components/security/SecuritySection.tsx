@@ -1,116 +1,215 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import {
-  ShieldCheck,
-  Lock,
-  Key,
-  EyeOff,
-  Server,
-  CheckCircle2,
-  Award,
-} from "lucide-react";
+import { ShieldCheck, Lock, KeyRound, UserCheck, FileAudio, FileText, Database, Activity, Code } from "lucide-react";
+
+const securityCards = [
+  {
+    icon: ShieldCheck,
+    iconBg: "linear-gradient(135deg, rgba(37,99,235,0.15), rgba(92,156,255,0.1))",
+    iconColor: "#2563EB",
+    title: "HIPAA Compliant",
+    description: "End-to-end encryption. BAA provided.",
+  },
+  {
+    icon: Lock,
+    iconBg: "linear-gradient(135deg, rgba(63,164,106,0.16), rgba(63,164,106,0.07))",
+    iconColor: "#1E7A4C",
+    title: "SOC 2 Type II",
+    description: "Independently audited annually.",
+  },
+  {
+    icon: KeyRound,
+    iconBg: "linear-gradient(135deg, rgba(11,27,58,0.12), rgba(37,99,235,0.08))",
+    iconColor: "#0B1B3A",
+    title: "256-bit AES",
+    description: "Data encrypted at rest and in transit.",
+  },
+  {
+    icon: UserCheck,
+    iconBg: "linear-gradient(135deg, rgba(63,164,106,0.12), rgba(37,99,235,0.06))",
+    iconColor: "#1E7A4C",
+    title: "Zero Trust Access",
+    description: "Granular role-based permissions.",
+  },
+];
+
+/**
+ * MedicalSecurityVisual — A modern, Framer Motion-based visualization
+ * showing clinical documents orbiting and being securely processed into an EHR vault.
+ */
+function MedicalSecurityVisual() {
+  return (
+    <div className="relative w-full h-full min-h-[460px] lg:min-h-[600px] flex items-center justify-center">
+      {/* Background ECG Pulse */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-[0.04]">
+        <Activity className="w-full h-full min-h-[350px] text-brand-ink" />
+      </div>
+
+      {/* Orbiting Elements */}
+      <div className="absolute w-[300px] h-[300px] lg:w-[480px] lg:h-[480px] rounded-full border border-brand-teal/20 border-dashed animate-[spin_25s_linear_infinite]">
+        {/* Node 1: Audio */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 lg:w-16 lg:h-16 bg-white rounded-xl border border-slate-200 shadow-md flex items-center justify-center animate-[spin_25s_linear_infinite_reverse]">
+          <FileAudio className="w-5 h-5 lg:w-7 lg:h-7 text-brand-teal" />
+          {/* Secure Lock Badge */}
+          <div className="absolute -top-1.5 -right-1.5 lg:-top-2 lg:-right-2 w-5 h-5 lg:w-6 lg:h-6 bg-brand-ink rounded-full flex items-center justify-center shadow-sm">
+            <Lock className="w-2.5 h-2.5 lg:w-3.5 lg:h-3.5 text-white" />
+          </div>
+        </div>
+
+        {/* Node 2: SOAP Note */}
+        <div className="absolute bottom-[15%] right-0 translate-x-[20%] translate-y-[20%] w-12 h-12 lg:w-16 lg:h-16 bg-white rounded-xl border border-slate-200 shadow-md flex items-center justify-center animate-[spin_25s_linear_infinite_reverse]">
+          <FileText className="w-5 h-5 lg:w-7 lg:h-7 text-brand-teal" />
+          <div className="absolute -top-1.5 -right-1.5 lg:-top-2 lg:-right-2 w-5 h-5 lg:w-6 lg:h-6 bg-brand-ink rounded-full flex items-center justify-center shadow-sm">
+            <Lock className="w-2.5 h-2.5 lg:w-3.5 lg:h-3.5 text-white" />
+          </div>
+        </div>
+
+        {/* Node 3: Medical Codes */}
+        <div className="absolute bottom-[15%] left-0 -translate-x-[20%] translate-y-[20%] w-12 h-12 lg:w-16 lg:h-16 bg-white rounded-xl border border-slate-200 shadow-md flex items-center justify-center animate-[spin_25s_linear_infinite_reverse]">
+          <Code className="w-5 h-5 lg:w-7 lg:h-7 text-brand-teal" />
+          <div className="absolute -top-1.5 -right-1.5 lg:-top-2 lg:-right-2 w-5 h-5 lg:w-6 lg:h-6 bg-brand-ink rounded-full flex items-center justify-center shadow-sm">
+            <Lock className="w-2.5 h-2.5 lg:w-3.5 lg:h-3.5 text-white" />
+          </div>
+        </div>
+      </div>
+
+      {/* Scanning Laser Line */}
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{ duration: 4, ease: "linear", repeat: Infinity }}
+        className="absolute w-[300px] h-[300px] lg:w-[480px] lg:h-[480px] rounded-full opacity-60"
+        style={{
+          background: "conic-gradient(from 0deg, transparent 70%, rgba(37,99,235,0.08) 100%)",
+        }}
+      >
+        <div className="absolute top-0 right-1/2 w-[2px] h-1/2 bg-gradient-to-t from-transparent to-brand-teal/30" />
+      </motion.div>
+
+      {/* Center EHR Vault */}
+      <div className="relative z-10 w-24 h-24 lg:w-32 lg:h-32 rounded-2xl flex items-center justify-center bg-white shadow-xl border border-slate-100 p-2.5 lg:p-3.5">
+        <div className="w-full h-full rounded-xl flex flex-col items-center justify-center relative overflow-hidden"
+          style={{
+            background: "linear-gradient(135deg, #0B1B3A, #2563EB)",
+            boxShadow: "inset 0 0 20px rgba(0,0,0,0.3)",
+          }}
+        >
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.2),transparent_50%)]" />
+          <Database className="w-6 h-6 lg:w-10 lg:h-10 text-white/90 mb-1 lg:mb-2 relative z-10" />
+          <ShieldCheck className="w-4 h-4 lg:w-6 lg:h-6 text-brand-teal relative z-10" />
+        </div>
+        
+        {/* Pulse rings emitting from the vault */}
+        <div className="absolute inset-0 rounded-2xl border border-brand-teal/20 animate-ping [animation-duration:3s]" />
+      </div>
+    </div>
+  );
+}
 
 export function SecuritySection() {
-  const securityFeatures = [
-    {
-      title: "HIPAA Compliant & BAA Included",
-      description:
-        "Full compliance with HIPAA Security & Privacy Rules. Business Associate Agreements (BAA) executed instantly for all medical practices.",
-      icon: ShieldCheck,
-      badge: "HIPAA Compliant",
-    },
-    {
-      title: "SOC 2 Type II Certified",
-      description:
-        "Independently audited controls validating enterprise-grade operational security, availability, and confidential data processing.",
-      icon: Award,
-      badge: "SOC 2 Type II",
-    },
-    {
-      title: "Bank-Grade Encryption",
-      description:
-        "All protected health information (PHI) is encrypted in transit using TLS 1.3 and at rest with AES-256 cryptographic standards.",
-      icon: Lock,
-      badge: "AES-256 & TLS 1.3",
-    },
-    {
-      title: "Zero LLM Data Retention",
-      description:
-        "Strict privacy architecture: your patient consultations and clinical notes are never stored or used to train third-party AI models.",
-      icon: EyeOff,
-      badge: "Zero Training Guarantee",
-    },
-    {
-      title: "Role-Based Access Control (RBAC)",
-      description:
-        "Granular administrative privileges, single sign-on (SSO/SAML 2.0), and multi-factor authentication across your entire clinic.",
-      icon: Key,
-      badge: "SSO / SAML 2.0",
-    },
-    {
-      title: "Immutable Audit Logs",
-      description:
-        "Comprehensive event logging capturing every view, edit, export, and EHR sync event for seamless compliance reporting.",
-      icon: Server,
-      badge: "Full Audit Trails",
-    },
-  ];
-
   return (
     <section
       id="security"
-      className="py-24 sm:py-32 bg-white border-t border-slate-200 relative overflow-hidden"
+      className="py-10 sm:py-16 bg-white border-b border-slate-200 overflow-hidden relative"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-brand-ink tracking-tight">
-            Healthcare security built for total trust.
-          </h2>
-          <p className="text-lg text-slate-600 mt-4 leading-relaxed font-normal">
-            Designed to satisfy the strictest enterprise healthcare standards.
-          </p>
-        </div>
+      {/* Background ambient glow */}
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_top_right,rgba(37,99,235,0.03),transparent_50%)] pointer-events-none" />
+      <div className="page-container relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+          {/* Left: Text + cards */}
+          <div>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="text-xs font-bold tracking-[0.2em] uppercase mb-5 text-brand-teal"
+            >
+              Security &amp; Compliance
+            </motion.p>
 
-        {/* 6 Security Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {securityFeatures.map((item, idx) => {
-            const Icon = item.icon;
-            return (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.08 }}
-                className="bg-white rounded-3xl p-8 border border-slate-200 shadow-xs hover:border-brand-teal-200 hover:border-brand-teal-200 transition-all flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="w-12 h-12 rounded-2xl surface-teal text-white flex items-center justify-center shadow-xs">
-                      <Icon className="w-6 h-6" />
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-2xl sm:text-3xl font-extrabold leading-[1.1] tracking-tight text-brand-ink mb-6"
+            >
+              Built for healthcare&apos;s
+              <br />
+              strictest requirements.
+            </motion.h2>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-lg font-medium leading-relaxed mb-10 text-slate-500 max-w-lg"
+            >
+              Clinical data is the most sensitive information that exists.
+              NOTENRA treats it accordingly — with architecture designed from
+              the ground up for healthcare compliance.
+            </motion.p>
+
+            <motion.div
+              variants={{
+                hidden: { opacity: 0 },
+                show: {
+                  opacity: 1,
+                  transition: { staggerChildren: 0.1, delayChildren: 0.3 },
+                },
+              }}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+              className="grid grid-cols-2 gap-5"
+            >
+              {securityCards.map((card) => {
+                const Icon = card.icon;
+                return (
+                  <motion.div
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+                    }}
+                    key={card.title}
+                    className="glass-card rounded-[20px] p-6 border border-slate-200/60 bg-white/60 hover:bg-white hover:border-brand-teal/40 hover:-translate-y-1 transition-all shadow-xs hover:shadow-md cursor-default group"
+                  >
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
+                      style={{ background: card.iconBg }}
+                    >
+                      <Icon
+                        className="w-4 h-4"
+                        style={{ color: card.iconColor }}
+                      />
                     </div>
-                    <span className="px-3 py-1 rounded-full bg-brand-teal/10 text-brand-teal text-xs font-bold border border-brand-teal-100">
-                      {item.badge}
-                    </span>
-                  </div>
+                    <p className="font-bold text-base text-brand-ink mb-1">
+                      {card.title}
+                    </p>
+                    <p className="text-sm font-medium text-slate-500 leading-relaxed">
+                      {card.description}
+                    </p>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          </div>
 
-                  <h3 className="text-xl font-bold text-brand-ink mb-3">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-slate-600 leading-relaxed font-normal">
-                    {item.description}
-                  </p>
-                </div>
-
-                <div className="pt-6 mt-6 border-t border-slate-100 flex items-center gap-2 text-xs font-bold text-brand-ink">
-                  <CheckCircle2 className="w-4 h-4 text-brand-teal" />
-                  <span>Enterprise Security Standard</span>
-                </div>
-              </motion.div>
-            );
-          })}
+          {/* Right: Security visualization */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, x: 20 }}
+            whileInView={{ opacity: 1, scale: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="flex items-center justify-center lg:absolute lg:right-[-10%] lg:top-1/2 lg:-translate-y-1/2 pointer-events-none"
+          >
+            <div className="relative w-full max-w-[400px] lg:max-w-none lg:w-[650px] lg:h-[650px]">
+              <MedicalSecurityVisual />
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

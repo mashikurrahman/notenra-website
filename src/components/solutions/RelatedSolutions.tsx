@@ -6,9 +6,8 @@ import { FileText, Cpu, CreditCard, BarChart3, ArrowRight } from "lucide-react";
 
 /* Single source of truth for the solution set — reused by every service page
    so adding a solution only needs an entry here.
-   NOTE: only Medical Documentation has a dedicated page so far. The others
-   point at their homepage sections; swap `href` to /solutions/<slug> as each
-   service page ships. */
+   `slug` matches the route basename, so a page can pass its own folder name
+   as `currentSlug` and never accidentally list itself. */
 export const SOLUTIONS = [
   {
     slug: "medical-documentation",
@@ -19,7 +18,7 @@ export const SOLUTIONS = [
     href: "/solutions/medical-documentation",
   },
   {
-    slug: "coding",
+    slug: "medical-coding",
     title: "Medical Coding",
     blurb:
       "Human-reviewed ICD-10, CPT, and HCPCS assignment with compliance cross-checks.",
@@ -27,19 +26,19 @@ export const SOLUTIONS = [
     href: "/solutions/medical-coding",
   },
   {
-    slug: "billing",
-    title: "Billing",
+    slug: "medical-billing",
+    title: "Medical Billing",
     blurb:
-      "Pre-claim scrubbing that catches missing modifiers before submission.",
+      "Pre-claim scrubbing, denial management, and A/R follow-up on one trail.",
     icon: CreditCard,
-    href: "/#billing",
+    href: "/solutions/medical-billing",
   },
   {
     slug: "payroll-management",
     title: "Payroll Management",
     blurb: "RVU productivity and compensation analytics across every location.",
     icon: BarChart3,
-    href: "/#payroll",
+    href: "/solutions/payroll-management",
   },
 ] as const;
 
@@ -58,10 +57,10 @@ export function RelatedSolutions({
   const related = SOLUTIONS.filter((s) => s.slug !== currentSlug);
 
   return (
-    <section className="py-24 sm:py-32 bg-white relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-10 sm:py-16 bg-slate-50 border-t border-slate-200 relative overflow-hidden">
+      <div className="page-container">
         <div className="text-center max-w-2xl mx-auto mb-14">
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-brand-ink tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-brand-ink tracking-tight">
             {heading}
           </h2>
           <p className="text-lg text-slate-600 mt-4 leading-relaxed font-normal">
@@ -82,7 +81,7 @@ export function RelatedSolutions({
               >
                 <Link
                   href={s.href}
-                  className="group relative flex flex-col h-full bg-white rounded-3xl p-8 border border-slate-200 shadow-xs hover:border-brand-teal-200 hover:border-brand-teal-200 transition-all duration-300"
+                  className="group relative flex flex-col h-full bg-white rounded-3xl p-8 border border-slate-200 shadow-xs hover:border-brand-teal-200 transition-all duration-300"
                 >
                   <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-brand-teal to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
@@ -93,7 +92,7 @@ export function RelatedSolutions({
                   <h3 className="text-xl font-bold text-brand-ink mb-2 group-hover:text-brand-teal transition-colors">
                     {s.title}
                   </h3>
-                  <p className="text-sm text-slate-600 leading-relaxed font-normal flex-1">
+                  <p className="text-base text-slate-600 leading-relaxed font-normal flex-1">
                     {s.blurb}
                   </p>
 

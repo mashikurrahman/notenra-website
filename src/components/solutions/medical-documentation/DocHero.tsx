@@ -25,7 +25,7 @@ const STACK = [
 export function DocHero({ onOpenDemo }: DocHeroProps) {
   return (
     <section className="relative pt-32 pb-20 sm:pt-40 sm:pb-24 lg:pt-44 lg:pb-28 overflow-hidden bg-hero-grid">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="page-container">
         {/* Breadcrumb */}
         <motion.nav
           initial={{ opacity: 0 }}
@@ -56,12 +56,11 @@ export function DocHero({ onOpenDemo }: DocHeroProps) {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-6 space-y-8"
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-ink/5 border border-slate-200 text-brand-ink text-xs font-semibold">
-              <FileText className="w-3.5 h-3.5 text-brand-teal" />
-              <span>Medical Documentation</span>
+            <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400">
+              Medical Documentation
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-ink tracking-tight leading-[1.1]">
+            <h1 className="text-2xl sm:text-3xl lg:text-6xl font-extrabold text-brand-ink tracking-tight leading-[1.1]">
               Every note written,{" "}
               <span className="text-accent accent-underline">
                 reviewed, and ready.
@@ -94,10 +93,10 @@ export function DocHero({ onOpenDemo }: DocHeroProps) {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
               <button
                 onClick={onOpenDemo}
-                className="px-8 py-4 rounded-full surface-navy text-white text-base font-bold tracking-wide shadow-xs  hover:border-brand-teal-200 hover: hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 group"
+                className="px-8 py-4 rounded-full bg-brand-teal text-white text-base font-bold tracking-wide shadow-xs  hover:border-brand-teal-200 hover: hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 group"
               >
                 <span>Book a Demo</span>
-                <ArrowRight className="w-5 h-5 text-brand-aqua transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="w-5 h-5 text-white transition-transform group-hover:translate-x-1" />
               </button>
 
               <a

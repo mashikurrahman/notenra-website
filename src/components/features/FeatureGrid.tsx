@@ -9,6 +9,12 @@ import {
   BarChart3,
   ShieldCheck,
 } from "lucide-react";
+import { UiPatientTimeline } from "../visuals/UiPatientTimeline";
+import { UiCodingSuggestion } from "../visuals/UiCodingSuggestion";
+import { UiScribeVisual } from "../visuals/UiScribeVisual";
+import { UiBillingVisual } from "../visuals/UiBillingVisual";
+import { UiPayrollVisual } from "../visuals/UiPayrollVisual";
+import { UiExpertVisual } from "../visuals/UiExpertVisual";
 
 export function FeatureGrid() {
   const features = [
@@ -19,6 +25,7 @@ export function FeatureGrid() {
       description:
         "Captures the patient-clinician conversation in real time and structures it into medical facts.",
       icon: Mic,
+      Visual: UiScribeVisual,
     },
     {
       id: "clinical-docs",
@@ -27,6 +34,7 @@ export function FeatureGrid() {
       description:
         "Generates SOAP notes and H&Ps in seconds, synced directly to Epic, Athena, and Cerner.",
       icon: FileText,
+      Visual: UiPatientTimeline,
     },
     {
       id: "coding",
@@ -35,6 +43,7 @@ export function FeatureGrid() {
       description:
         "Automates diagnostic and procedural coding with 99.4% precision against CMS guidelines.",
       icon: Sparkles,
+      Visual: UiCodingSuggestion,
     },
     {
       id: "billing",
@@ -43,6 +52,7 @@ export function FeatureGrid() {
       description:
         "Flags missing modifiers and unbundled codes before claims reach your billing software.",
       icon: CreditCard,
+      Visual: UiBillingVisual,
     },
     {
       id: "payroll",
@@ -51,6 +61,7 @@ export function FeatureGrid() {
       description:
         "Tracks physician RVU productivity and compensation data across every practice location.",
       icon: BarChart3,
+      Visual: UiPayrollVisual,
     },
     {
       id: "human-expert",
@@ -59,17 +70,18 @@ export function FeatureGrid() {
       description:
         "Certified clinical reviewers audit edge cases for 100% compliance and zero hallucination risk.",
       icon: ShieldCheck,
+      Visual: UiExpertVisual,
     },
   ];
 
   return (
     <section
       id="platform"
-      className="py-16 sm:py-24 bg-white border-b border-slate-200 relative overflow-hidden"
+      className="py-10 sm:py-16 bg-white border-b border-slate-200 relative overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="page-container">
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-brand-ink tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-brand-ink tracking-tight">
             Solutions built for the full clinical workflow.
           </h2>
           <p className="text-lg text-slate-600 mt-4 leading-relaxed font-normal">
@@ -89,21 +101,27 @@ export function FeatureGrid() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
-                className="scroll-mt-28 group relative bg-slate-50 rounded-3xl p-6 border border-slate-200 shadow-xs hover:border-brand-teal-200 transition-all duration-300"
+                whileHover={{ y: -4, scale: 1.01 }}
+                className="scroll-mt-28 group relative bg-white rounded-[24px] p-6 border border-slate-100 shadow-sm hover:shadow-xl hover:border-brand-teal/20 transition-all duration-500 overflow-hidden"
               >
                 <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-brand-teal to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                <div className="w-11 h-11 rounded-2xl surface-teal text-white flex items-center justify-center shadow-xs group-hover:scale-110 transition-all mb-5">
-                  <Icon className="w-6 h-6" />
+                
+                {/* UI Visual inside the card */}
+                <div className="w-full h-36 mb-6 rounded-xl overflow-hidden relative group-hover:scale-[1.03] transition-transform duration-700 ease-out">
+                  <f.Visual />
                 </div>
 
-                <div className="text-xs font-extrabold uppercase tracking-wider text-brand-teal mb-1">
-                  {f.tagline}
+                <div className="flex items-center justify-between mb-3">
+                  <div className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 group-hover:text-brand-teal transition-colors">
+                    {f.tagline}
+                  </div>
+                  <Icon className="w-4 h-4 text-brand-teal/50" />
                 </div>
-                <h3 className="text-xl font-bold text-brand-ink mb-2.5 group-hover:text-brand-teal transition-colors">
+                
+                <h3 className="text-[19px] font-bold text-brand-ink mb-2">
                   {f.title}
                 </h3>
-                <p className="text-sm text-slate-600 leading-relaxed font-normal">
+                <p className="text-[15px] text-slate-500 leading-relaxed font-normal">
                   {f.description}
                 </p>
               </motion.div>

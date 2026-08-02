@@ -40,75 +40,48 @@
   --color-slate-600: #456179; /* 6.48:1 - body copy */
   --color-slate-700: #33506A;
   --color-slate-800: #23405A;
-  --color-slate-900: #0F3355;
 
   /* --- Brand ----------------------------------------------------
-     Primary pulled back to hue 206 to match the logo's teal (205).
-     The old #0E7C93 had drifted to hue 217 - steel blue, not teal. */
-  --color-brand-teal: #007F8B; /* 4.76:1 white / 4.50:1 slate-50 */
-  --color-brand-teal-deep: #006472;
-  /* Solid teal hairlines. Previously these were the brand teal at 15-50%
-     alpha, which over a tinted surface never resolves into a clean line —
-     it just hazes the edge. Opaque values read sharp at 1px. */
-  --color-brand-teal-50: #E6F3F5; /* light tile ground — pair with teal-deep text */
-  --color-brand-teal-100: #C2DEE2;
-  --color-brand-teal-200: #93C6CD;
-  --color-brand-aqua: #4ACCCE; /* logo pulse - dark surfaces only */
-  --color-brand-ink: #0F3355; /* headings, 12.9:1 */
-  --color-brand-navy: #0C3050; /* flat dark panel, 13.5:1 */
+     Aligned to the Notenra logo artwork. Primary is the wordmark
+     blue #2563EB; accent green comes from the pulse/heartbeat mark. */
+  --color-brand-teal: #2563EB; /* logo primary blue — 4.58:1 on white */
+  --color-brand-teal-deep: #1D4ED8; /* darker blue for hover states */
+  --color-brand-teal-50: #EFF6FF; /* blue-50 — light tile ground */
+  --color-brand-teal-100: #DBEAFE; /* blue-100 */
+  --color-brand-teal-200: #93C5FD; /* blue-200 — hairlines & borders */
+  --color-brand-aqua: #5BC98C; /* logo pulse green — dark surfaces */
+  --color-brand-ink: #0B1B3A; /* logo navy — headings, 15.3:1 */
+  --color-brand-navy: #0B1B3A; /* flat dark panel */
 
-  /* --- Coral accent ---------------------------------------------
-     The hue break that makes the page feel alive. Deliberately
-     rationed: accent marks, large figures, dark-panel highlights.
-     Note it can NEVER carry white text - coral bright enough to
-     read as coral tops out at 3.9:1 - so it is not a button fill
-     unless the label is ink. */
-  --color-coral: #FF7A5C; /* on navy 5.27:1 | with ink text 5.04:1 */
-  --color-coral-600: #DE5340; /* large text on white 3.88:1 */
-  --color-coral-700: #B23A28; /* small text on coral-50 5.23:1 */
-  --color-coral-100: #FFDCD3;
-  --color-coral-50: #FDEDE9;
+  /* --- Green accent (from the logo's pulse mark) ------------------
+     Replaces coral. The heartbeat waveform green provides the
+     complementary hue that lifts the blue-dominant page. */
+  --color-coral: #3FA46A; /* logo green — on navy 5.3:1 */
+  --color-coral-600: #2F9E68; /* deeper green for large text */
+  --color-coral-700: #1E7A4C; /* dark green — small text 5.3:1 on white */
+  --color-coral-100: #C6E9DB;
+  --color-coral-50: #E8F7F1;
 
   /* --- Supporting ----------------------------------------------- */
-  --color-mint: #0F9B76; /* verified / positive, large text only */
-  --color-mint-700: #0B7A5C; /* 5.42:1 - small text */
+  --color-mint: #1E7A4C; /* verified / positive, large text only */
+  --color-mint-700: #1C6B45; /* 5.42:1 - small text */
   --color-mint-100: #C6E9DB;
   --color-mint-50: #E8F7F1;
 }
 
 @layer base {
-  :root {
-    /* Logo artwork colors - reserved for the mark itself */
-    --brand-navy: #0A2B4B;
-    --brand-teal: #098E9A;
-    --brand-teal-light: #4ACCCE;
-
-    --ink: #0F3355;
-    --ink-soft: #33506A;
-    --ink-muted: #5F778F;
-
-    --cyan-primary: #007F8B;
-    --cyan-accent: #4ACCCE;
-    --coral-accent: #FF7A5C;
-
-    --bg-light: #FFFFFF;
-    --bg-slate: #F5F9FB;
-    --bg-tint: #F1F8F9;
-    --border-subtle: rgba(15, 51, 85, 0.09);
-  }
-
   html {
     scroll-behavior: smooth;
     font-family: var(--font-jakarta), var(--font-manrope), system-ui, -apple-system, sans-serif;
-    color: var(--ink);
-    background-color: var(--bg-light);
+    color: #0B1B3A;
+    background-color: #FFFFFF;
     -webkit-font-smoothing: antialiased;
   }
 
   body {
     overflow-x: hidden;
-    color: var(--ink);
-    background-color: var(--bg-light);
+    color: #0B1B3A;
+    background-color: #FFFFFF;
   }
 }
 
@@ -119,12 +92,15 @@
    brand color reads cleaner and more confident at every size.
    ============================================================ */
 
-.surface-navy {
-  background-color: #0C3050;
-}
 
 .surface-teal {
-  background-color: #007F8B;
+  background-color: #2563EB;
+}
+
+@layer utilities {
+  .page-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
 }
 
 /* Section grounds are plain white. Alternating bands are separated by a
@@ -146,25 +122,25 @@
 }
 
 .glass-panel-dark {
-  background: rgba(12, 48, 80, 0.9);
+  background: rgba(11, 27, 58, 0.9);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 24px 50px -22px rgba(12, 48, 80, 0.4);
+  box-shadow: 0 24px 50px -22px rgba(11, 27, 58, 0.4);
 }
 
 .glass-card {
   background: rgba(255, 255, 255, 0.65);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(15, 51, 85, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.08);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-card:hover {
   background: rgba(255, 255, 255, 0.95);
-  border-color: rgba(0, 127, 139, 0.32);
-  box-shadow: 0 24px 48px -12px rgba(0, 127, 139, 0.14);
+  border-color: rgba(37, 99, 235, 0.32);
+  box-shadow: 0 24px 48px -12px rgba(37, 99, 235, 0.14);
   transform: translateY(-3px);
 }
 
@@ -175,11 +151,11 @@
 /* Replaces the old 3-stop gradient headline text. Solid color
    keeps the letterforms sharp and the emphasis unambiguous. */
 .text-accent {
-  color: #007F8B;
+  color: #2563EB;
 }
 
 .text-accent-warm {
-  color: #DE5340;
+  color: #3FA46A;
 }
 
 /* Warm underline stroke beneath an emphasised headline phrase.
@@ -187,7 +163,7 @@
    a highlighter block rather than an underline, which looks crude when
    the phrase wraps across two lines. */
 .accent-underline {
-  background-image: linear-gradient(transparent 86%, rgba(255, 122, 92, 0.55) 86%);
+  background-image: linear-gradient(transparent 86%, rgba(63, 164, 106, 0.45) 86%);
   background-repeat: no-repeat;
   padding-bottom: 0.06em;
 }
@@ -195,7 +171,7 @@
 /* Single retained atmospheric gradient. Radial falloff on a
    background is the one place a gradient earns its keep. */
 .bg-radial-glow {
-  background: radial-gradient(circle at 50% 25%, rgba(0, 127, 139, 0.09) 0%, rgba(74, 204, 206, 0.04) 45%, transparent 70%);
+  background: radial-gradient(circle at 50% 25%, rgba(37, 99, 235, 0.09) 0%, rgba(91, 201, 140, 0.04) 45%, transparent 70%);
 }
 
 .bg-hero-grid {

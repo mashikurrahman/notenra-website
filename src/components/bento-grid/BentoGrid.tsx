@@ -18,14 +18,14 @@ interface BentoGridProps {
 export function BentoGrid({ tone = "white" }: BentoGridProps = {}) {
   return (
     <section
-      className={`py-16 sm:py-24 relative overflow-hidden ${
+      className={`py-10 sm:py-16 relative overflow-hidden ${
         tone === "grey" ? "bg-slate-50 border-y border-slate-200" : "bg-white"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="page-container">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-brand-ink tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-brand-ink tracking-tight">
             Built for enterprise-grade clinical operations.
           </h2>
           <p className="text-lg text-slate-600 mt-4 leading-relaxed font-normal">
@@ -41,16 +41,16 @@ export function BentoGrid({ tone = "white" }: BentoGridProps = {}) {
             real content, and each card pins its footer with mt-auto. */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {/* Card 1: Large Feature - AI Clinical Documentation */}
-          <div className="md:col-span-2 lg:col-span-2 surface-navy rounded-3xl p-7 text-white flex flex-col shadow-xs relative overflow-hidden">
+          <div className="md:col-span-2 lg:col-span-2 bg-[linear-gradient(135deg,#2563EB_0%,#1D4ED8_100%)] rounded-3xl p-7 text-white flex flex-col shadow-xs relative overflow-hidden">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-brand-aqua text-xs font-bold mb-6 border border-white/15">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 text-white text-xs font-bold mb-6 border border-white/20 shadow-sm">
                 <FileText className="w-3.5 h-3.5" />
                 <span>Core Scribing Engine</span>
               </div>
               <h3 className="text-3xl font-extrabold text-white mb-3">
                 Autonomous Clinical Documentation
               </h3>
-              <p className="text-slate-300 text-sm leading-relaxed max-w-md">
+              <p className="text-slate-300 text-base leading-relaxed max-w-md">
                 Continuous ambient listening transforms live patient encounters
                 into fully formatted, EHR-ready SOAP notes with zero manual
                 input required.
@@ -60,10 +60,10 @@ export function BentoGrid({ tone = "white" }: BentoGridProps = {}) {
             {/* mt-auto pins this to the card floor; pt-8 guarantees a gap
                 from the copy above even when the card is short. */}
             <div className="mt-auto pt-8">
-              <div className="p-4 bg-brand-navy/45 rounded-2xl border border-white/12 text-xs font-mono space-y-2">
-                <div className="flex items-center justify-between text-brand-aqua">
+              <div className="p-4 bg-white/10 rounded-2xl border border-white/20 text-xs font-mono space-y-2">
+                <div className="flex items-center justify-between text-white font-semibold">
                   <span>EHR Bi-directional Sync</span>
-                  <span className="text-[10px] bg-brand-teal text-white px-2 py-0.5 rounded font-sans">
+                  <span className="text-[10px] bg-white text-brand-teal px-2 py-0.5 rounded font-sans font-bold">
                     Active
                   </span>
                 </div>
@@ -84,7 +84,7 @@ export function BentoGrid({ tone = "white" }: BentoGridProps = {}) {
               <h4 className="text-lg font-bold text-brand-ink mb-2">
                 Medical Coding AI
               </h4>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-sm text-slate-600 leading-relaxed">
                 Automates ICD-10, CPT, and HCC risk adjustments with built-in
                 compliance logic.
               </p>
@@ -104,7 +104,7 @@ export function BentoGrid({ tone = "white" }: BentoGridProps = {}) {
               <h4 className="text-lg font-bold text-brand-ink mb-2">
                 Pre-Claim Billing
               </h4>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-sm text-slate-600 leading-relaxed">
                 Scrubs claims prior to submission to prevent denials and
                 accelerate first-pass yield.
               </p>
@@ -123,7 +123,7 @@ export function BentoGrid({ tone = "white" }: BentoGridProps = {}) {
               <h4 className="text-lg font-bold text-brand-ink mb-2">
                 HIPAA & SOC 2 Ready
               </h4>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-sm text-slate-600 leading-relaxed">
                 Bank-grade AES-256 encryption with zero public model training on
                 your patient data.
               </p>
@@ -145,7 +145,7 @@ export function BentoGrid({ tone = "white" }: BentoGridProps = {}) {
                   <h4 className="text-xl font-bold text-brand-ink">
                     Practice Revenue Intelligence
                   </h4>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-sm text-slate-500">
                     Real-time RVU tracking & denial analytics
                   </p>
                 </div>
@@ -155,7 +155,7 @@ export function BentoGrid({ tone = "white" }: BentoGridProps = {}) {
               </span>
             </div>
 
-            <p className="text-sm text-slate-600 leading-relaxed mb-6 font-normal">
+            <p className="text-base text-slate-600 leading-relaxed mb-6 font-normal">
               Gain complete visibility into physician coding accuracy, average
               Days in AR, and reimbursement velocity across all practice clinic
               locations.
@@ -200,7 +200,7 @@ export function BentoGrid({ tone = "white" }: BentoGridProps = {}) {
               <h4 className="text-lg font-bold text-white mb-2">
                 Human MD Review Layer
               </h4>
-              <p className="text-xs text-white/85 leading-relaxed">
+              <p className="text-sm text-white/85 leading-relaxed">
                 Certified clinical reviewers verify notes for total accuracy,
                 compliance, and peace of mind.
               </p>

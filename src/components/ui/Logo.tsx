@@ -34,19 +34,20 @@ const WORDMARK_PATHS = [
   "M876.552 80.1247C911.218 77.3112 940.96 97.0585 945.96 132.991C947.254 142.283 946.728 152.455 946.74 161.906L946.695 199.75C938.806 199.946 933.82 200.217 928.723 193.457C927.75 189.162 928.011 182.471 928.029 177.865L928.131 154.997C928.198 139.355 928.729 126.924 918.377 113.806C911.387 104.949 900.227 99.3696 889.072 98.1485C877.585 96.8047 866.037 100.101 856.994 107.304C847.208 115.197 842.197 125.64 840.865 137.969C839.781 147.91 843.062 157.896 848.65 166.048C855.094 175.399 864.967 181.835 876.129 183.959C892.267 186.95 903.036 181.008 915.602 172.383C917.446 178.185 919.104 185.306 920.198 191.277C899.244 206.096 867.667 205.987 846.963 190.682C833.827 181.017 825.132 166.479 822.836 150.34C820.404 134.074 824.504 117.506 834.244 104.248C844.904 89.9399 859.171 82.6912 876.552 80.1247Z",
 ];
 
-/* Per-variant ink so the artwork stays legible on both light and navy surfaces */
+/* Per-variant ink so the artwork stays legible on both light and navy surfaces.
+   Colors are taken directly from the Notenra Logo.svg artwork file. */
 const PALETTE = {
   default: {
-    word: "#0A2B4B",
-    stem: "#098E9A",
-    join: ["#1B6479", "#268896"],
-    pulse: ["#38ADB6", "#4ACCCE"],
+    word: "#2563EB",
+    stem: "#2F9E68",
+    join: ["#1C6B45", "#2A8A5A"],
+    pulse: ["#3FA46A", "#5BC98C"],
   },
   light: {
     word: "#FFFFFF",
-    stem: "#4ACCCE",
-    join: ["#7FD6DC", "#9BE4E6"],
-    pulse: ["#5FD6D8", "#8FE9EB"],
+    stem: "#5BC98C",
+    join: ["#3FA46A", "#5BC98C"],
+    pulse: ["#5BC98C", "#8FE9B0"],
   },
 } as const;
 
@@ -132,7 +133,7 @@ export function Logo({
           className={`hidden sm:block border-l pl-3 text-[10px] font-semibold uppercase tracking-[0.18em] leading-tight ${
             variant === "light"
               ? "border-white/20 text-brand-aqua"
-              : "border-slate-200 text-brand-teal"
+              : "border-slate-200 text-slate-500"
           }`}
         >
           Clinical

@@ -82,12 +82,12 @@ export function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="py-16 sm:py-24 bg-slate-50 relative overflow-hidden border-b border-slate-200"
+      className="py-10 sm:py-16 bg-slate-50 relative overflow-hidden border-b border-slate-200"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="page-container">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-brand-ink tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-brand-ink tracking-tight">
             How it works.
           </h2>
           <p className="text-lg text-slate-600 mt-4 leading-relaxed font-normal">
@@ -117,7 +117,7 @@ export function HowItWorks() {
                       <span
                         className={`text-xs font-extrabold px-2.5 py-1 rounded-lg ${
                           isActive
-                            ? "surface-navy text-white"
+                            ? "bg-brand-teal text-white"
                             : "bg-slate-100 text-slate-500"
                         }`}
                       >
@@ -184,8 +184,8 @@ export function HowItWorks() {
                     </span>
                   </div>
 
-                  {/* Code / Content Snippet Box - the one dark accent in this panel */}
-                  <div className="p-5 surface-navy rounded-2xl border border-brand-aqua/20 font-mono text-xs text-[#A5E9EA] leading-relaxed shadow-xs">
+                  {/* Code / Content Snippet Box */}
+                  <div className="p-5 bg-slate-50 rounded-2xl border border-slate-200 font-mono text-xs text-slate-600 leading-relaxed shadow-sm">
                     {steps[activeStep].preview.snippet}
                   </div>
 

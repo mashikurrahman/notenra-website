@@ -37,12 +37,12 @@ export function FaqSection() {
   return (
     <section
       id="faq"
-      className="py-24 sm:py-32 bg-white border-t border-slate-200 relative overflow-hidden"
+      className="py-10 sm:py-16 bg-white border-t border-slate-200 relative overflow-hidden"
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-14">
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-brand-ink tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-brand-ink tracking-tight">
             Frequently asked questions.
           </h2>
         </div>

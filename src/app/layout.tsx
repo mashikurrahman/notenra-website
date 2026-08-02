@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Manrope } from "next/font/google";
 import "./globals.css";
 import { buildMetadata, generateStructuredData } from "@/lib/seo";
+import { ScrollToTop } from "@/components/ui/ScrollToTop";
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -28,6 +29,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${plusJakarta.variable} ${manrope.variable} scroll-smooth antialiased`}
+      suppressHydrationWarning
     >
       <head>
         <script
@@ -35,8 +37,13 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: generateStructuredData() }}
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-white text-brand-ink selection:bg-brand-aqua/30 selection:text-brand-ink">
+      <body
+        className="min-h-screen flex flex-col bg-white text-brand-ink selection:bg-brand-aqua/30 selection:text-brand-ink"
+        suppressHydrationWarning
+      >
         {children}
+        {/* Rendered once here so every route gets it, including /_not-found */}
+        <ScrollToTop />
       </body>
     </html>
   );

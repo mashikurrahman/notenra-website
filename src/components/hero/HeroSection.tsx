@@ -10,7 +10,7 @@ export function HeroSection() {
     // this section drops to normal padding and carries no buttons of its own.
     // It also takes the grey ground so the two do not read as one block.
     <section className="relative pt-24 pb-16 sm:pt-28 sm:pb-20 lg:pt-32 lg:pb-24 overflow-hidden bg-white border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="page-container">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* Left Column: Copy & CTAs */}
           <motion.div
@@ -19,13 +19,12 @@ export function HeroSection() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-6 space-y-8 text-center lg:text-left"
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-ink/5 border border-slate-200 text-brand-ink text-xs font-semibold">
-              <span className="h-2 w-2 rounded-full bg-brand-teal" />
-              <span>AI Scribe + Human Clinical Review</span>
+            <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400">
+              AI Scribe + Human Clinical Review
             </div>
 
             {/* Demoted to h2 — HeroBanner now carries the page's only h1. */}
-            <h2 className="text-4xl sm:text-5xl font-extrabold text-brand-ink tracking-tight leading-[1.1] text-balance">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-brand-ink tracking-tight leading-[1.1] text-balance">
               Documentation that moves at the{" "}
               <span className="text-accent">speed of care.</span>
             </h2>

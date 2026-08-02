@@ -3,17 +3,20 @@
 import { useState } from "react";
 import { Stethoscope } from "lucide-react";
 import { Header } from "@/components/header/Header";
-import { HeroBanner } from "@/components/hero/HeroBanner";
-import { HeroSection } from "@/components/hero/HeroSection";
-import { StatsFloat } from "@/components/social-proof/StatsFloat";
+import { Hero } from "@/components/hero/Hero";
 import { SocialProof } from "@/components/social-proof/SocialProof";
+import { ProblemSection } from "@/components/problem/ProblemSection";
 import { FeatureGrid } from "@/components/features/FeatureGrid";
+import { AiSection } from "@/components/ai-section/AiSection";
 import { SpecialtiesSection } from "@/components/specialties/SpecialtiesSection";
 import { HowItWorks } from "@/components/how-it-works/HowItWorks";
+import { SecuritySection } from "@/components/security/SecuritySection";
 import { BentoGrid } from "@/components/bento-grid/BentoGrid";
 import { CtaSection } from "@/components/cta-section/CtaSection";
 import { Footer } from "@/components/footer/Footer";
 import { DemoModal } from "@/components/demo-modal/DemoModal";
+import { VisionSection } from "@/components/vision/VisionSection";
+import { MottoSection } from "@/components/motto/MottoSection";
 
 export default function Home() {
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
@@ -24,18 +27,20 @@ export default function Home() {
   return (
     <main className="min-h-screen flex flex-col bg-white text-brand-ink">
       <Header onOpenDemo={handleOpenDemo} />
-      {/* Add the clinician cutout to /public, then pass it here:
-          <HeroBanner ... imageSrc="/hero-clinician.png" /> */}
-      <HeroBanner onOpenDemo={handleOpenDemo} />
-      <StatsFloat />
-      <HeroSection />
+      <Hero onOpenDemo={handleOpenDemo} />
+      <ProblemSection />
       <SocialProof />
       <FeatureGrid />
+      <VisionSection />
+      <AiSection />
       <SpecialtiesSection tone="grey" />
       <BentoGrid />
       <HowItWorks />
+      <SecuritySection />
+      <MottoSection />
       {/* Homepage closes on the platform-wide promise: time returned. */}
       <CtaSection
+        tone="white"
         onOpenDemo={handleOpenDemo}
         eyebrow="Start with one clinic"
         headline="Give your physicians"

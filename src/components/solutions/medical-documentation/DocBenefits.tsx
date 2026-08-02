@@ -59,13 +59,13 @@ export function DocBenefits() {
   return (
     <section
       id="benefits"
-      className="py-24 sm:py-32 bg-white relative overflow-hidden scroll-mt-28"
+      className="py-10 sm:py-16 bg-white relative overflow-hidden scroll-mt-28"
     >
       <div className="absolute inset-0 bg-hero-grid opacity-40 pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-brand-ink tracking-tight">
+      <div className="page-container relative z-10">
+        <div className="text-center max-w-2xl mx-auto mb-10">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-brand-ink tracking-tight">
             What changes for your practice.
           </h2>
           <p className="text-lg text-slate-600 mt-4 leading-relaxed font-normal">
@@ -103,7 +103,7 @@ export function DocBenefits() {
                 <h3 className="text-lg font-bold text-brand-ink mb-2 group-hover:text-brand-teal transition-colors">
                   {b.title}
                 </h3>
-                <p className="text-sm text-slate-600 leading-relaxed font-normal">
+                <p className="text-base text-slate-600 leading-relaxed font-normal">
                   {b.body}
                 </p>
               </motion.div>

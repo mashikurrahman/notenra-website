@@ -61,58 +61,61 @@ export function CtaSection({
   const SecondaryIcon = secondary.icon ?? Stethoscope;
 
   return (
-    <section
-      className={`py-20 sm:py-24 relative overflow-hidden ${
-        tone === "grey" ? "bg-slate-50 border-t border-slate-200" : "bg-white"
+    <section 
+      className={`py-24 sm:py-32 relative overflow-hidden border-t border-slate-200 ${
+        tone === "grey" ? "bg-slate-50" : "bg-white"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="surface-navy rounded-[2.5rem] p-8 sm:p-14 lg:p-20 text-white text-center relative overflow-hidden shadow-xs">
-          <div className="relative z-10 max-w-3xl mx-auto space-y-8">
+      <div className="page-container">
+        <div className="bg-white border border-slate-200 p-10 sm:p-16 lg:p-20 rounded-[40px] text-center relative z-10 shadow-xs overflow-hidden">
+          {/* Subtle inside gradient background */}
+          <div className="absolute inset-0 pointer-events-none opacity-40 bg-[radial-gradient(circle_at_top_right,rgba(63,164,106,0.06),transparent_50%)]" />
+          
+          <div className="max-w-3xl mx-auto space-y-8 relative z-20">
             {eyebrow && (
-              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-brand-aqua text-xs font-bold uppercase tracking-widest">
+              <span className="block text-[11px] font-bold uppercase tracking-[0.2em] text-brand-teal mb-4">
                 {eyebrow}
               </span>
             )}
 
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-brand-ink tracking-tight leading-[1.1]">
               {headline}
               {headlineAccent && (
                 <>
                   {" "}
-                  <span className="text-brand-aqua">{headlineAccent}</span>
+                  <span className="text-brand-teal">{headlineAccent}</span>
                 </>
               )}
             </h2>
 
-            <p className="text-lg sm:text-xl text-slate-300 font-normal leading-relaxed max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-slate-600 font-normal leading-relaxed max-w-2xl mx-auto">
               {subhead}
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
               <button
                 onClick={onOpenDemo}
-                className="w-full sm:w-auto px-10 py-4 rounded-full surface-teal text-white text-base font-bold tracking-wide shadow-xs  hover:bg-brand-teal-deep hover:border-brand-teal-200 hover:scale-[1.03] active:scale-[0.98] transition-all flex items-center justify-center gap-3 group"
+                className="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-teal text-white text-[15px] font-bold shadow-md hover:bg-brand-teal-deep hover:-translate-y-[2px] transition-all flex items-center justify-center gap-2 group"
               >
-                <span>{primaryLabel}</span>
-                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                {primaryLabel}
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
 
               <Link
                 href={secondary.href}
-                className="w-full sm:w-auto px-8 py-4 rounded-full bg-white/10 text-white hover:bg-white/20 border border-white/20 text-base font-bold transition-all flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-8 py-4 rounded-full bg-white border border-slate-200 text-brand-ink text-[15px] font-bold hover:bg-slate-50 transition-all flex items-center justify-center gap-2 group"
               >
-                <SecondaryIcon className="w-4 h-4 text-brand-aqua" />
-                <span>{secondary.label}</span>
+                <SecondaryIcon className="w-4 h-4 text-brand-teal" />
+                {secondary.label}
               </Link>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-xs text-slate-300 pt-8 border-t border-white/10">
-              {assurances.map(({ icon: Icon, label }) => (
-                <span key={label} className="flex items-center gap-1.5">
-                  <Icon className="w-4 h-4 text-brand-aqua" />
-                  {label}
-                </span>
+            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 pt-10 border-t border-slate-100">
+              {assurances.map((a, i) => (
+                <div key={i} className="flex items-center gap-2 text-slate-500">
+                  <a.icon className="w-4 h-4 text-brand-teal" />
+                  <span className="text-xs font-semibold uppercase tracking-wider">{a.label}</span>
+                </div>
               ))}
             </div>
           </div>

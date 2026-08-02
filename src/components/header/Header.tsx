@@ -35,23 +35,24 @@ const solutionsItems = [
     icon: Cpu,
   },
   {
-    title: "Billing",
+    title: "Medical Billing",
     desc: "Pre-claim denial prevention",
-    href: "/#billing",
+    href: "/solutions/medical-billing",
     icon: CreditCard,
   },
   {
     title: "Payroll Management",
     desc: "Revenue & compensation analytics",
-    href: "/#payroll",
+    href: "/solutions/payroll-management",
     icon: BarChart3,
   },
 ];
 
 const navLinks = [
-  { name: "Specialties", href: "/about#specialties" },
-  { name: "Security", href: "/about#security" },
   { name: "About", href: "/about" },
+  { name: "Pricing", href: "/pricing" },
+  { name: "Privacy", href: "/privacy" },
+  { name: "Terms", href: "/terms" },
   { name: "Contact", href: "/contact" },
 ];
 
@@ -89,17 +90,16 @@ export function Header({ onOpenDemo }: HeaderProps) {
 
   return (
     <header
-      className={`fixed inset-x-0 z-40 px-3 sm:px-4 transition-[top] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-        isScrolled ? "top-2 sm:top-3" : "top-3 sm:top-4"
+      className={`fixed inset-x-0 z-40 transition-all duration-500 ease-in-out ${
+        isScrolled ? "top-4 px-4" : "top-0 px-4 sm:px-8"
       }`}
     >
-      {/* Floating glass pill. Only CSS transitions here — springing layout
-          properties against a backdrop-filter is what made this stutter. */}
+      {/* Flat nav morphing to floating pill */}
       <div
-        className={`mx-auto flex items-center justify-between rounded-full border backdrop-blur-xl backdrop-saturate-150 transition-[max-width,padding,background-color,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`mx-auto flex items-center justify-between border backdrop-saturate-150 transition-all duration-500 ease-in-out ${
           isScrolled
-            ? "max-w-5xl px-4 py-2 bg-white/90 border-slate-200 shadow-lg"
-            : "max-w-6xl px-6 py-3.5 bg-white/80 border-slate-200 shadow-md"
+            ? "max-w-7xl rounded-full border-slate-200/60 bg-white/90 py-2.5 px-5 shadow-lg backdrop-blur-xl"
+            : "max-w-7xl rounded-[2rem] border-transparent bg-transparent py-5 px-2 shadow-none backdrop-blur-none"
         }`}
       >
         {/* Transform-only scale keeps the logo shrink on the GPU */}
@@ -111,7 +111,7 @@ export function Header({ onOpenDemo }: HeaderProps) {
           <Logo size="md" showTagline />
         </div>
 
-        <nav className="hidden xl:flex items-center gap-6 px-4">
+        <nav className="hidden md:flex items-center gap-6 px-4">
           <div
             className="relative"
             onMouseEnter={() => setSolutionsOpen(true)}
@@ -125,11 +125,13 @@ export function Header({ onOpenDemo }: HeaderProps) {
             <Link
               href="/#platform"
               aria-expanded={solutionsOpen}
-              className="inline-flex items-center gap-1 text-sm font-semibold text-brand-ink/80 hover:text-brand-teal transition-colors py-1"
+              className="inline-flex items-center gap-1 text-sm font-semibold text-brand-ink/80 hover:text-brand-teal transition-colors py-1 cursor-pointer"
             >
               <span>Solutions</span>
               <ChevronDown
-                className={`w-3.5 h-3.5 transition-transform duration-200 ${solutionsOpen ? "rotate-180 text-brand-teal" : ""}`}
+                className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                  solutionsOpen ? "rotate-180 text-brand-teal" : ""
+                }`}
               />
             </Link>
 
@@ -140,30 +142,34 @@ export function Header({ onOpenDemo }: HeaderProps) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 8 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute top-full -left-4 w-72 bg-white rounded-2xl shadow-lg border border-slate-200 p-2 mt-3 z-50"
+                  className="absolute top-full -left-4 pt-3 z-50"
                 >
-                  {solutionsItems.map((item) => {
-                    const Icon = item.icon;
-                    return (
-                      <Link
-                        key={item.title}
-                        href={item.href}
-                        className="flex items-start gap-3 p-2.5 rounded-lg hover:bg-slate-50 transition-colors group"
-                      >
-                        <div className="p-2 rounded-lg bg-brand-teal/10 text-brand-teal group-hover:bg-brand-teal group-hover:text-white transition-colors">
-                          <Icon className="w-4 h-4" />
-                        </div>
-                        <div>
-                          <div className="text-xs font-bold text-brand-ink group-hover:text-brand-teal">
-                            {item.title}
+                  {/* Invisible bridge to prevent closing on gap */}
+                  <div className="absolute top-0 left-0 right-0 h-3 bg-transparent" />
+                  <div className="w-72 bg-white rounded-2xl shadow-lg border border-slate-200 p-2">
+                    {solutionsItems.map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <Link
+                          key={item.title}
+                          href={item.href}
+                          className="flex items-start gap-3 p-2.5 rounded-lg hover:bg-slate-50 transition-colors group"
+                        >
+                          <div className="p-2 rounded-lg bg-brand-teal/10 text-brand-teal group-hover:bg-brand-teal group-hover:text-white transition-colors">
+                            <Icon className="w-4 h-4" />
                           </div>
-                          <div className="text-[11px] text-slate-500">
-                            {item.desc}
+                          <div>
+                            <div className="text-xs font-bold text-brand-ink group-hover:text-brand-teal">
+                              {item.title}
+                            </div>
+                            <div className="text-[11px] text-slate-500">
+                              {item.desc}
+                            </div>
                           </div>
-                        </div>
-                      </Link>
-                    );
-                  })}
+                        </Link>
+                      );
+                    })}
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -180,7 +186,7 @@ export function Header({ onOpenDemo }: HeaderProps) {
           ))}
         </nav>
 
-        <div className="hidden xl:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-3">
           <a
             href={SIGN_IN_URL}
             target="_blank"
@@ -192,14 +198,14 @@ export function Header({ onOpenDemo }: HeaderProps) {
           <div className="h-4 w-px bg-slate-200" aria-hidden="true" />
           <button
             onClick={onOpenDemo}
-            className="px-5 py-2.5 rounded-full surface-navy text-white text-xs font-bold uppercase tracking-wider shadow-md hover:shadow-lg hover:bg-brand-teal hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 group"
+            className="px-5 py-2.5 rounded-full bg-brand-teal text-white text-xs font-bold uppercase tracking-wider shadow-md hover:shadow-lg hover:bg-brand-teal-deep hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 group"
           >
             <span>Book Demo</span>
-            <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1 text-brand-aqua" />
+            <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1 text-white/80" />
           </button>
         </div>
 
-        <div className="xl:hidden flex items-center gap-2">
+        <div className="md:hidden flex items-center gap-2">
           <a
             href={SIGN_IN_URL}
             target="_blank"
@@ -210,7 +216,7 @@ export function Header({ onOpenDemo }: HeaderProps) {
           </a>
           <button
             onClick={onOpenDemo}
-            className="px-3.5 py-1.5 rounded-full surface-navy text-white text-xs font-bold"
+            className="px-3.5 py-1.5 rounded-full bg-brand-teal text-white text-xs font-bold"
           >
             Demo
           </button>
@@ -237,7 +243,7 @@ export function Header({ onOpenDemo }: HeaderProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.98 }}
             transition={{ duration: 0.2 }}
-            className={`xl:hidden mx-auto mt-2 rounded-3xl border border-slate-200 bg-white/95 backdrop-blur-xl shadow-md overflow-hidden transition-[max-width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            className={`md:hidden mx-auto mt-2 rounded-3xl border border-slate-200 bg-white/95 backdrop-blur-xl shadow-md overflow-hidden transition-[max-width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
               isScrolled ? "max-w-5xl" : "max-w-6xl"
             }`}
           >
@@ -250,7 +256,9 @@ export function Header({ onOpenDemo }: HeaderProps) {
                 >
                   <span>Solutions</span>
                   <ChevronDown
-                    className={`w-4 h-4 transition-transform ${mobileSolutionsOpen ? "rotate-180" : ""}`}
+                    className={`w-4 h-4 transition-transform ${
+                      mobileSolutionsOpen ? "rotate-180" : ""
+                    }`}
                   />
                 </button>
                 <AnimatePresence>
@@ -307,10 +315,10 @@ export function Header({ onOpenDemo }: HeaderProps) {
                     setMobileMenuOpen(false);
                     onOpenDemo();
                   }}
-                  className="w-full py-3 rounded-xl surface-navy text-white font-bold text-sm shadow-md text-center flex items-center justify-center gap-2"
+                  className="w-full py-3 rounded-xl bg-brand-teal text-white font-bold text-sm shadow-md text-center flex items-center justify-center gap-2"
                 >
                   <span>Book Your Demo</span>
-                  <ArrowRight className="w-4 h-4 text-brand-aqua" />
+                  <ArrowRight className="w-4 h-4 text-white" />
                 </button>
               </div>
             </div>

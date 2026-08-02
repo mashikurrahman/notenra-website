@@ -176,11 +176,11 @@ export function DocTypes() {
   return (
     <section
       id="types"
-      className="py-24 sm:py-32 bg-white border-y border-slate-200 relative overflow-hidden scroll-mt-28"
+      className="py-10 sm:py-16 bg-white border-y border-slate-200 relative overflow-hidden scroll-mt-28"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="page-container">
         <div className="text-center max-w-2xl mx-auto mb-14">
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-brand-ink tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-brand-ink tracking-tight">
             Every note your practice writes.
           </h2>
           <p className="text-lg text-slate-600 mt-4 leading-relaxed font-normal">
@@ -227,7 +227,7 @@ export function DocTypes() {
             className="bg-white rounded-3xl p-8 border border-slate-200 shadow-xs grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
           >
             <div className="lg:col-span-6 space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-teal/10 text-brand-teal text-xs font-extrabold">
+              <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-teal">
                 {active.tagline}
               </div>
               <h3 className="text-2xl font-bold text-brand-ink">
@@ -253,18 +253,18 @@ export function DocTypes() {
             </div>
 
             {/* Sample note */}
-            <div className="lg:col-span-6 surface-navy text-white rounded-2xl p-6 border border-brand-aqua/20 space-y-3 shadow-xs">
-              <div className="flex items-center gap-1.5 text-brand-aqua font-bold text-[11px] border-b border-white/12 pb-2 font-mono">
+            <div className="lg:col-span-6 bg-slate-50 text-slate-700 rounded-2xl p-6 border border-slate-200 space-y-3 shadow-sm">
+              <div className="flex items-center gap-1.5 text-brand-teal font-bold text-[11px] border-b border-slate-200 pb-2 font-mono">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 Sample {active.name.replace(/s$/, "")}
               </div>
               <div className="space-y-2.5 pt-1">
                 {active.sample.map((row) => (
                   <div key={row.label} className="flex gap-3">
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-brand-aqua shrink-0 w-24 pt-0.5">
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-brand-teal shrink-0 w-24 pt-0.5">
                       {row.label}
                     </span>
-                    <p className="text-[11px] text-[#A5E9EA] leading-relaxed font-mono">
+                    <p className="text-[11px] text-slate-600 leading-relaxed font-mono">
                       {row.text}
                     </p>
                   </div>

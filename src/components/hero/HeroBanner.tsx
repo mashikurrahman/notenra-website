@@ -62,7 +62,7 @@ export function HeroBanner({
                 Advanced Clinical Documentation
               </span>
 
-              <h1 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-brand-ink text-balance leading-[1.08] max-w-[13ch]">
+              <h1 className="mt-6 text-2xl sm:text-3xl lg:text-6xl font-extrabold tracking-tight text-brand-ink text-balance leading-[1.08] max-w-[13ch]">
                 Less charting. More patients.
               </h1>
 
@@ -155,7 +155,7 @@ export function HeroBanner({
                      Deliberately plain so it never reads as finished art. */
                   <div className="mb-10 flex w-[70%] max-w-xs flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-brand-teal-200 bg-white/70 px-6 py-10 text-center">
                     <Stethoscope className="h-7 w-7 text-brand-teal-200" />
-                    <p className="text-xs font-semibold text-slate-500">
+                    <p className="text-sm font-semibold text-slate-500">
                       Clinician photo goes here
                     </p>
                     <p className="text-[11px] leading-relaxed text-slate-400">

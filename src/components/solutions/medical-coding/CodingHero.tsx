@@ -24,7 +24,7 @@ const codeRows = [
 export function CodingHero({ onOpenDemo }: CodingHeroProps) {
   return (
     <section className="relative pt-32 pb-20 sm:pt-40 sm:pb-24 lg:pt-44 lg:pb-28 overflow-hidden bg-white bg-hero-grid">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="page-container">
         <motion.nav
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -46,11 +46,10 @@ export function CodingHero({ onOpenDemo }: CodingHeroProps) {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-6 space-y-8"
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-ink/5 border border-slate-200 text-brand-ink text-xs font-semibold">
-              <BadgeCheck className="w-3.5 h-3.5 text-brand-teal" />
-              <span>Medical Coding</span>
+            <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400">
+              Medical Coding
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-ink tracking-tight leading-[1.1]">
+            <h1 className="text-2xl sm:text-3xl lg:text-6xl font-extrabold text-brand-ink tracking-tight leading-[1.1]">
               Code with confidence. <span className="text-accent accent-underline">Get paid faster.</span>
             </h1>
             <p className="text-lg sm:text-xl text-slate-600 font-normal leading-relaxed max-w-2xl">
@@ -69,9 +68,9 @@ export function CodingHero({ onOpenDemo }: CodingHeroProps) {
               ))}
             </div>
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
-              <button onClick={onOpenDemo} className="px-8 py-4 rounded-full surface-navy text-white text-base font-bold tracking-wide shadow-xs hover:bg-brand-teal hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 group">
+              <button onClick={onOpenDemo} className="px-8 py-4 rounded-full bg-brand-teal text-white text-base font-bold tracking-wide shadow-xs hover:bg-brand-teal hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 group">
                 <span>See Coding in Action</span>
-                <ArrowRight className="w-5 h-5 text-brand-aqua transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="w-5 h-5 text-white transition-transform group-hover:translate-x-1" />
               </button>
               <a href="#workflow" className="px-8 py-4 rounded-full bg-white border border-slate-200 text-brand-ink hover:text-brand-teal hover:border-brand-teal-200 text-base font-bold shadow-xs transition-all flex items-center justify-center gap-2">
                 See the workflow

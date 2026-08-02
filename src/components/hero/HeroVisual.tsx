@@ -141,36 +141,57 @@ export function HeroVisual() {
         <div className="flex items-center gap-2 p-1 bg-slate-100 rounded-xl mb-6">
           <button
             onClick={() => setActiveTab("soap")}
-            className={`flex-1 py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+            className={`relative flex-1 py-2 px-3 text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
               activeTab === "soap"
-                ? "bg-white text-brand-ink shadow-xs border border-slate-200"
+                ? "text-brand-ink"
                 : "text-slate-500 hover:text-brand-ink"
             }`}
           >
-            <FileCheck className="w-3.5 h-3.5 text-brand-teal" />
-            <span>Structured SOAP Note</span>
+            {activeTab === "soap" && (
+              <motion.div
+                layoutId="activeTab"
+                className="absolute inset-0 bg-white rounded-lg shadow-xs border border-slate-200"
+                transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
+              />
+            )}
+            <FileCheck className="w-3.5 h-3.5 text-brand-teal relative z-10" />
+            <span className="relative z-10">Structured SOAP Note</span>
           </button>
           <button
             onClick={() => setActiveTab("codes")}
-            className={`flex-1 py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+            className={`relative flex-1 py-2 px-3 text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
               activeTab === "codes"
-                ? "bg-white text-brand-ink shadow-xs border border-slate-200"
+                ? "text-brand-ink"
                 : "text-slate-500 hover:text-brand-ink"
             }`}
           >
-            <Sparkles className="w-3.5 h-3.5 text-brand-teal" />
-            <span>ICD-10 & CPT Codes</span>
+            {activeTab === "codes" && (
+              <motion.div
+                layoutId="activeTab"
+                className="absolute inset-0 bg-white rounded-lg shadow-xs border border-slate-200"
+                transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
+              />
+            )}
+            <Sparkles className="w-3.5 h-3.5 text-brand-teal relative z-10" />
+            <span className="relative z-10">ICD-10 & CPT Codes</span>
           </button>
           <button
             onClick={() => setActiveTab("transcript")}
-            className={`flex-1 py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+            className={`relative flex-1 py-2 px-3 text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
               activeTab === "transcript"
-                ? "bg-white text-brand-ink shadow-xs border border-slate-200"
+                ? "text-brand-ink"
                 : "text-slate-500 hover:text-brand-ink"
             }`}
           >
-            <User className="w-3.5 h-3.5 text-brand-teal" />
-            <span>Transcript</span>
+            {activeTab === "transcript" && (
+              <motion.div
+                layoutId="activeTab"
+                className="absolute inset-0 bg-white rounded-lg shadow-xs border border-slate-200"
+                transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
+              />
+            )}
+            <User className="w-3.5 h-3.5 text-brand-teal relative z-10" />
+            <span className="relative z-10">Transcript</span>
           </button>
         </div>
 
@@ -178,130 +199,153 @@ export function HeroVisual() {
         <div className="min-h-55 bg-white rounded-2xl border border-slate-200 p-5 shadow-inner space-y-4">
           {activeTab === "soap" && (
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-3 text-xs text-brand-ink"
+              variants={{
+                hidden: { opacity: 0 },
+                show: {
+                  opacity: 1,
+                  transition: { staggerChildren: 0.1 },
+                },
+              }}
+              initial="hidden"
+              animate="show"
+              className="space-y-4 text-xs text-brand-ink"
             >
-              <div>
-                <span className="font-extrabold uppercase tracking-wider text-brand-teal text-[10px] block mb-0.5">
+              <motion.div variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }}>
+                <span className="font-extrabold uppercase tracking-wider text-slate-400 text-[10px] block mb-1">
                   Subjective
                 </span>
-                <p className="bg-slate-50 p-2.5 rounded-lg border border-slate-100 font-medium text-slate-700">
+                <p className="bg-slate-50 p-3 rounded-xl border border-slate-200 font-medium text-slate-700 text-xs leading-relaxed shadow-sm">
                   54yo male with exertional chest tightness x 3 days. Pain is
                   retrosternal, radiating to left shoulder, triggered by
                   climbing stairs. No diaphoresis or syncope.
                 </p>
-              </div>
+              </motion.div>
 
-              <div>
-                <span className="font-extrabold uppercase tracking-wider text-brand-teal text-[10px] block mb-0.5">
+              <motion.div variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }}>
+                <span className="font-extrabold uppercase tracking-wider text-slate-400 text-[10px] block mb-1">
                   Objective
                 </span>
-                <div className="grid grid-cols-3 gap-2 text-[11px]">
-                  <div className="bg-brand-ink/5 p-2 rounded-lg text-center font-semibold">
-                    <span className="block text-slate-400 text-[9px]">BP</span>{" "}
+                <div className="grid grid-cols-3 gap-2 text-xs">
+                  <div className="bg-brand-ink/5 p-2.5 rounded-xl border border-slate-100 text-center font-bold">
+                    <span className="block text-slate-500 text-[10px] font-semibold uppercase">BP</span>{" "}
                     138/86 mmHg
                   </div>
-                  <div className="bg-brand-ink/5 p-2 rounded-lg text-center font-semibold">
-                    <span className="block text-slate-400 text-[9px]">HR</span>{" "}
+                  <div className="bg-brand-ink/5 p-2.5 rounded-xl border border-slate-100 text-center font-bold">
+                    <span className="block text-slate-500 text-[10px] font-semibold uppercase">HR</span>{" "}
                     78 bpm
                   </div>
-                  <div className="bg-brand-ink/5 p-2 rounded-lg text-center font-semibold">
-                    <span className="block text-slate-400 text-[9px]">
+                  <div className="bg-brand-ink/5 p-2.5 rounded-xl border border-slate-100 text-center font-bold">
+                    <span className="block text-slate-500 text-[10px] font-semibold uppercase">
                       SpO2
                     </span>{" "}
-                    98% Ambient
+                    98%
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
-              <div>
-                <span className="font-extrabold uppercase tracking-wider text-brand-teal text-[10px] block mb-0.5">
+              <motion.div variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }}>
+                <span className="font-extrabold uppercase tracking-wider text-slate-400 text-[10px] block mb-1">
                   Assessment & Plan
                 </span>
-                <p className="bg-slate-50 p-2.5 rounded-lg border border-slate-100 font-medium text-slate-700">
+                <p className="bg-slate-50 p-3 rounded-xl border border-slate-200 font-medium text-slate-700 text-xs leading-relaxed shadow-sm">
                   1. Chest Pain (R07.9) - Order 12-lead ECG immediately. 2.
                   Hypertension (I10) - Continue Lisinopril 10mg daily.
                 </p>
-              </div>
+              </motion.div>
             </motion.div>
           )}
 
           {activeTab === "codes" && (
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-3"
+              variants={{
+                hidden: { opacity: 0 },
+                show: {
+                  opacity: 1,
+                  transition: { staggerChildren: 0.1 },
+                },
+              }}
+              initial="hidden"
+              animate="show"
+              className="space-y-4"
             >
-              <div className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
-                Automated ICD-10 Medical Diagnosis Codes
-              </div>
-              <div className="space-y-2">
-                {icd10Codes.map((item) => (
-                  <div
-                    key={item.code}
-                    className="flex items-center justify-between p-2.5 bg-slate-50 border border-slate-200 rounded-xl hover:border-brand-teal transition-colors"
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 bg-brand-ink/10 text-brand-ink border border-slate-200 rounded font-mono font-bold text-xs">
-                        {item.code}
-                      </span>
-                      <span className="text-xs font-semibold text-brand-ink">
-                        {item.desc}
+              <motion.div variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }}>
+                <div className="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-2">
+                  Automated ICD-10 Medical Diagnosis Codes
+                </div>
+                <div className="space-y-2">
+                  {icd10Codes.map((item) => (
+                    <div
+                      key={item.code}
+                      className="flex items-center justify-between p-3 bg-white border border-slate-200 rounded-xl hover:border-brand-teal transition-colors shadow-sm"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="px-2.5 py-1 surface-teal text-white border border-brand-teal-100 rounded-md font-mono font-bold text-xs shadow-xs">
+                          {item.code}
+                        </span>
+                        <span className="text-xs font-bold text-brand-ink">
+                          {item.desc}
+                        </span>
+                      </div>
+                      <span className="text-[11px] font-bold px-2.5 py-1 bg-brand-teal/10 text-brand-teal-deep rounded-full">
+                        Confidence {item.confidence}
                       </span>
                     </div>
-                    <span className="text-[10px] font-bold px-2 py-0.5 bg-brand-teal/10 text-brand-teal rounded-full">
-                      Confidence {item.confidence}
-                    </span>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              </motion.div>
 
-              <div className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 pt-1">
-                Suggested CPT Billing Procedure Codes
-              </div>
-              <div className="space-y-2">
-                {cptCodes.map((item) => (
-                  <div
-                    key={item.code}
-                    className="flex items-center justify-between p-2.5 bg-slate-50 border border-slate-200 rounded-xl"
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 bg-brand-teal text-white rounded font-mono font-bold text-xs">
-                        CPT {item.code}
-                      </span>
-                      <span className="text-xs font-semibold text-brand-ink">
-                        {item.desc}
+              <motion.div variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }}>
+                <div className="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-2 pt-2">
+                  Suggested CPT Billing Procedure Codes
+                </div>
+                <div className="space-y-2">
+                  {cptCodes.map((item) => (
+                    <div
+                      key={item.code}
+                      className="flex items-center justify-between p-3 bg-white border border-slate-200 rounded-xl hover:border-brand-teal transition-colors shadow-sm"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="px-2.5 py-1 surface-blue text-white rounded-md font-mono font-bold text-xs shadow-xs">
+                          CPT {item.code}
+                        </span>
+                        <span className="text-xs font-bold text-brand-ink">
+                          {item.desc}
+                        </span>
+                      </div>
+                      <span className="text-xs font-bold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md">
+                        RVU {item.RVU}
                       </span>
                     </div>
-                    <span className="text-[10px] font-bold text-slate-500">
-                      RVU {item.RVU}
-                    </span>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              </motion.div>
             </motion.div>
           )}
 
           {activeTab === "transcript" && (
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-3 text-xs"
+              variants={{
+                hidden: { opacity: 0 },
+                show: {
+                  opacity: 1,
+                  transition: { staggerChildren: 0.1 },
+                },
+              }}
+              initial="hidden"
+              animate="show"
+              className="space-y-3"
             >
               {conversationLines.map((line, idx) => (
-                <div
+                <motion.div
                   key={idx}
-                  className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 space-y-0.5"
+                  variants={{ hidden: { opacity: 0, x: -10 }, show: { opacity: 1, x: 0 } }}
+                  className="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1 shadow-sm"
                 >
-                  <span className="font-extrabold text-brand-teal block text-[10px] uppercase">
+                  <span className="font-extrabold text-brand-teal block text-[10px] uppercase tracking-wider">
                     {line.speaker}
                   </span>
-                  <p className="text-slate-700 font-medium">{line.text}</p>
-                </div>
+                  <p className="text-slate-700 font-medium text-xs leading-relaxed">{line.text}</p>
+                </motion.div>
               ))}
             </motion.div>
           )}

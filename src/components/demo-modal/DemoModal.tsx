@@ -55,7 +55,7 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
       particleCount: 80,
       spread: 70,
       origin: { y: 0.6 },
-      colors: ["#0F3355", "#007F8B", "#4ACCCE", "#FF7A5C"],
+      colors: ["#2563EB", "#3B82F6", "#60A5FA", "#93C5FD"],
     });
   };
 
@@ -87,9 +87,9 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
           className="relative w-full max-w-xl bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden z-10 my-8"
         >
           {/* Header Bar */}
-          <div className="surface-navy px-6 py-5 text-white flex items-center justify-between relative overflow-hidden">
+          <div className="bg-[linear-gradient(135deg,#2563EB_0%,#1D4ED8_100%)] px-6 py-5 text-white flex items-center justify-between relative overflow-hidden">
             <div className="relative z-10">
-              <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-brand-teal/30 border border-brand-teal-200 text-brand-aqua text-xs font-semibold mb-1">
+              <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/20 border border-white/20 text-white text-xs font-semibold mb-1">
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>Personalized Practice Demo</span>
               </div>
@@ -108,7 +108,7 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
 
           {!submitted ? (
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
-              <p className="text-sm text-slate-600">
+              <p className="text-base text-slate-600">
                 See how NOTENRA combines AI medical scribing with expert
                 clinical human review to save 2.8+ hours daily.
               </p>
@@ -227,7 +227,7 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
               <h4 className="text-2xl font-bold text-brand-ink">
                 Demo Confirmed!
               </h4>
-              <p className="text-sm text-slate-600 max-w-md mx-auto">
+              <p className="text-base text-slate-600 max-w-md mx-auto">
                 Thank you,{" "}
                 <strong className="text-brand-ink">
                   {formData.name || "Doctor"}

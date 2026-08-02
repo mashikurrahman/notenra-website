@@ -27,7 +27,7 @@ export default function MedicalCodingPage() {
       <QualityAssurance />
       <CodingFaq />
       <RelatedSolutions
-        currentSlug="coding"
+        currentSlug="medical-coding"
         heading="More ways to strengthen the clinical record."
         subheading="Coding is more reliable when documentation, billing, and every downstream workflow share the same source of truth."
       />

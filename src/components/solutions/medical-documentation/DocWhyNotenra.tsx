@@ -66,11 +66,11 @@ export function DocWhyNotenra() {
   return (
     <section
       id="why"
-      className="py-24 sm:py-32 bg-white relative overflow-hidden scroll-mt-28"
+      className="py-10 sm:py-16 bg-white relative overflow-hidden scroll-mt-28"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-brand-ink tracking-tight">
+      <div className="page-container">
+        <div className="text-center max-w-2xl mx-auto mb-10">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-brand-ink tracking-tight">
             Why practices choose NOTENRA.
           </h2>
           <p className="text-lg text-slate-600 mt-4 leading-relaxed font-normal">
@@ -80,7 +80,7 @@ export function DocWhyNotenra() {
         </div>
 
         {/* Comparison */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-10">
           <div className="lg:col-span-6 bg-slate-50 border border-slate-200 rounded-3xl p-8 space-y-6">
             <div className="pb-6 border-b border-slate-200">
               <div className="text-xs font-extrabold text-slate-400 uppercase tracking-widest mb-1">
@@ -159,7 +159,7 @@ export function DocWhyNotenra() {
                 <div className="text-sm font-bold text-brand-ink mb-1">
                   {c.label}
                 </div>
-                <div className="text-xs text-slate-500 leading-relaxed">
+                <div className="text-sm text-slate-500 leading-relaxed">
                   {c.detail}
                 </div>
               </motion.div>
