@@ -11,7 +11,9 @@ import {
   UserCheck,
   Calendar,
 } from "lucide-react";
-import confetti from "canvas-confetti";
+/* canvas-confetti is deliberately NOT imported at module scope. It only ever
+   runs after a successful submit, but a static import pulls it into the page's
+   initial JS on every route the modal is mounted on — which is all of them. */
 
 interface DemoModalProps {
   isOpen: boolean;
@@ -51,12 +53,20 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
-    confetti({
-      particleCount: 80,
-      spread: 70,
-      origin: { y: 0.6 },
-      colors: ["#2563EB", "#3B82F6", "#60A5FA", "#93C5FD"],
-    });
+
+    /* Fetched on demand. The success state renders immediately either way —
+       the celebration is decorative, so a failed chunk load must never be able
+       to hold up the confirmation. */
+    import("canvas-confetti")
+      .then(({ default: confetti }) => {
+        confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ["#2563EB", "#3B82F6", "#60A5FA", "#93C5FD"],
+        });
+      })
+      .catch(() => {});
   };
 
   const handleReset = () => {

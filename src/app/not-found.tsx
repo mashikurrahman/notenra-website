@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Header } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
-import { DemoModal } from "@/components/demo-modal/DemoModal";
+import { LazyDemoModal } from "@/components/demo-modal/LazyDemoModal";
 import { ArrowRight, Home, HelpCircle } from "lucide-react";
 
 export default function NotFound() {
@@ -58,7 +58,7 @@ export default function NotFound() {
       </section>
 
       <Footer />
-      <DemoModal isOpen={isDemoModalOpen} onClose={handleCloseDemo} />
+      <LazyDemoModal isOpen={isDemoModalOpen} onClose={handleCloseDemo} />
     </main>
   );
 }

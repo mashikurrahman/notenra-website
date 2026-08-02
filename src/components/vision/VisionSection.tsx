@@ -84,9 +84,10 @@ export function VisionSection() {
             <div className="relative w-full aspect-[4/3] rounded-[32px] overflow-hidden shadow-2xl border border-slate-100 bg-slate-50">
               <motion.div className="w-full h-full relative" style={{ y: imgY }}>
                 <Image
-                  src="/images/vision.png"
+                  src="/images/vision.jpg"
                   alt="Physician and patient with floating AI documentation"
                   fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover scale-110"
                 />
                 <div className="absolute inset-0 bg-brand-teal/5 mix-blend-multiply" />

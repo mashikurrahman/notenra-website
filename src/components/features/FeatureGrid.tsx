@@ -1,6 +1,4 @@
-"use client";
-
-import { motion } from "framer-motion";
+import { Reveal } from "@/components/ui/Reveal";
 import {
   Mic,
   FileText,
@@ -94,37 +92,37 @@ export function FeatureGrid() {
           {features.map((f, idx) => {
             const Icon = f.icon;
             return (
-              <motion.div
-                key={f.id}
-                id={f.id}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.08 }}
-                whileHover={{ y: -4, scale: 1.01 }}
-                className="scroll-mt-28 group relative bg-white rounded-[24px] p-6 border border-slate-100 shadow-sm hover:shadow-xl hover:border-brand-teal/20 transition-all duration-500 overflow-hidden"
-              >
-                <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-brand-teal to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                
-                {/* UI Visual inside the card */}
-                <div className="w-full h-36 mb-6 rounded-xl overflow-hidden relative group-hover:scale-[1.03] transition-transform duration-700 ease-out">
-                  <f.Visual />
-                </div>
+              /* Reveal owns the entry transform. The hover lift lives on the
+                 inner card so the two transforms never fight over the same
+                 element — and as plain CSS it was the only thing here that
+                 needed framer-motion's `whileHover`. */
+              <Reveal key={f.id} delay={idx * 80} className="scroll-mt-28">
+                <div
+                  id={f.id}
+                  className="group relative h-full bg-white rounded-[24px] p-6 border border-slate-100 shadow-sm hover:shadow-xl hover:border-brand-teal/20 hover:-translate-y-1 hover:scale-[1.01] transition-all duration-500 overflow-hidden"
+                >
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-brand-teal to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                <div className="flex items-center justify-between mb-3">
-                  <div className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 group-hover:text-brand-teal transition-colors">
-                    {f.tagline}
+                  {/* UI Visual inside the card */}
+                  <div className="w-full h-36 mb-6 rounded-xl overflow-hidden relative group-hover:scale-[1.03] transition-transform duration-700 ease-out">
+                    <f.Visual />
                   </div>
-                  <Icon className="w-4 h-4 text-brand-teal/50" />
+
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 group-hover:text-brand-teal transition-colors">
+                      {f.tagline}
+                    </div>
+                    <Icon className="w-4 h-4 text-brand-teal/50" />
+                  </div>
+
+                  <h3 className="text-[19px] font-bold text-brand-ink mb-2">
+                    {f.title}
+                  </h3>
+                  <p className="text-[15px] text-slate-500 leading-relaxed font-normal">
+                    {f.description}
+                  </p>
                 </div>
-                
-                <h3 className="text-[19px] font-bold text-brand-ink mb-2">
-                  {f.title}
-                </h3>
-                <p className="text-[15px] text-slate-500 leading-relaxed font-normal">
-                  {f.description}
-                </p>
-              </motion.div>
+              </Reveal>
             );
           })}
         </div>

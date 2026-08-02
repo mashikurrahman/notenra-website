@@ -11,7 +11,7 @@ import { TestimonialsSection } from "@/components/testimonials/TestimonialsSecti
 import { FaqSection } from "@/components/faq/FaqSection";
 import { CtaSection } from "@/components/cta-section/CtaSection";
 import { Footer } from "@/components/footer/Footer";
-import { DemoModal } from "@/components/demo-modal/DemoModal";
+import { LazyDemoModal } from "@/components/demo-modal/LazyDemoModal";
 
 export function AboutClientPage() {
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
@@ -64,7 +64,7 @@ export function AboutClientPage() {
         ]}
       />
       <Footer />
-      <DemoModal isOpen={isDemoModalOpen} onClose={handleCloseDemo} />
+      <LazyDemoModal isOpen={isDemoModalOpen} onClose={handleCloseDemo} />
     </main>
   );
 }

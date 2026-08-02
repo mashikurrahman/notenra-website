@@ -1,5 +1,3 @@
-"use client";
-
 import { XCircle, CheckCircle2, AlertTriangle, Sparkles } from "lucide-react";
 
 export function ComparisonSection() {

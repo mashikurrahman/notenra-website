@@ -8,12 +8,17 @@ import { MedicalWaveform } from "./MedicalWaveform";
 export function HeroCinematicVisual() {
   return (
     <div className="relative w-full h-[500px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl">
-      {/* Base Editorial Photography */}
+      {/* Base Editorial Photography.
+          Hero.tsx renders this whole column `hidden lg:flex` inside a
+          max-w-[540px] box, so the slot is always 540px when it exists at all.
+          Without an explicit `sizes`, `fill` defaults to 100vw and the browser
+          picks a 1200px+ candidate for a 540px slot. */}
       <div className="absolute inset-0">
         <Image
           src="/images/hero-doctor.jpg"
           alt="Physician consulting with patient in modern clinic"
           fill
+          sizes="540px"
           className="object-cover object-center"
           priority
         />

@@ -1,46 +1,43 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { ShieldCheck, Lock, CheckCircle2, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { HeroCinematicVisual } from "../visuals/HeroCinematicVisual";
+import { useDemo } from "@/components/demo-modal/DemoProvider";
 
-function clamp(v: number, min: number, max: number) {
-  return Math.min(Math.max(v, min), max);
-}
+/* Background neural network animation (matching AiSection style).
 
-function roundRect(
-  ctx: CanvasRenderingContext2D,
-  x: number,
-  y: number,
-  w: number,
-  h: number,
-  r: number
-) {
-  ctx.beginPath();
-  ctx.moveTo(x + r, y);
-  ctx.lineTo(x + w - r, y);
-  ctx.arcTo(x + w, y, x + w, y + r, r);
-  ctx.lineTo(x + w, y + h - r);
-  ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
-  ctx.lineTo(x + r, y + h);
-  ctx.arcTo(x, y + h, x, y + h - r, r);
-  ctx.lineTo(x, y + r);
-  ctx.arcTo(x, y, x + r, y, r);
-  ctx.closePath();
-}
+   Performance notes, because this runs on the highest-traffic page:
 
-/** Background neural network animation (Matching AiSection style) */
-function HeroCanvas({
-  mousePos,
-}: {
-  mousePos: { mx: number; my: number };
-}) {
+   - Node count is capped. The old density formula was W*H/12000, which on a
+     1920x960 hero produced ~154 nodes. The connection pass is O(n^2), so that
+     was ~11,800 distance checks per frame at 60fps. The cap holds the worst
+     case to MAX_NODES.
+   - Connections are compared by squared distance. sqrt() ran once per pair per
+     frame purely to be compared against a constant.
+   - The loop is suspended when the hero scrolls out of view. Previously it ran
+     forever, burning a frame budget on a section nobody was looking at, for
+     the entire length of the page.
+   - It also suspends on tab blur, and does not start at all under
+     prefers-reduced-motion (a single static frame is drawn instead). */
+const MAX_NODES = 70;
+const LINK_DIST = 120;
+const LINK_DIST_SQ = LINK_DIST * LINK_DIST;
+
+function HeroCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let W = 0;
@@ -57,97 +54,130 @@ function HeroCanvas({
     let nodes: Node[] = [];
 
     function initNodes() {
-      nodes = [];
-      const count = Math.floor((W * H) / 12000); // adjust density
-      for (let i = 0; i < count; i++) {
-        nodes.push({
-          x: Math.random() * W,
-          y: Math.random() * H,
-          vx: (Math.random() - 0.5) * 0.4,
-          vy: (Math.random() - 0.5) * 0.4,
-          r: Math.random() * 2 + 1,
-        });
-      }
+      const count = Math.min(Math.floor((W * H) / 12000), MAX_NODES);
+      nodes = Array.from({ length: count }, () => ({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+        r: Math.random() * 2 + 1,
+      }));
     }
 
     function resize() {
-      if (!canvas) return;
+      if (!canvas || !ctx) return;
       W = canvas.offsetWidth;
       H = canvas.offsetHeight;
       canvas.width = W * dpr;
       canvas.height = H * dpr;
-      
-      const ctx = canvas.getContext("2d");
-      if (ctx) {
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       initNodes();
     }
 
-    let animId: number;
+    let animId = 0;
+    let running = false;
 
-    function draw() {
-      const ctx = canvas?.getContext("2d");
+    function render(advance: boolean) {
       if (!ctx) return;
-      
+
       ctx.clearRect(0, 0, W, H);
-      t += 0.01;
+      if (advance) t += 0.01;
 
-      // Update positions & bounce off edges
-      nodes.forEach((p) => {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0 || p.x > W) p.vx *= -1;
-        if (p.y < 0 || p.y > H) p.vy *= -1;
-      });
+      if (advance) {
+        for (const p of nodes) {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0 || p.x > W) p.vx *= -1;
+          if (p.y < 0 || p.y > H) p.vy *= -1;
+        }
+      }
 
-      // Connections
+      // Connections — squared-distance comparison, no sqrt in the hot loop.
+      ctx.lineWidth = 0.8;
       for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
           const dx = nodes[i].x - nodes[j].x;
           const dy = nodes[i].y - nodes[j].y;
-          const d = Math.sqrt(dx * dx + dy * dy);
-          if (d < 120) {
+          const dSq = dx * dx + dy * dy;
+          if (dSq < LINK_DIST_SQ) {
+            const d = Math.sqrt(dSq); // only for the ones actually drawn
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
-            ctx.strokeStyle = `rgba(37,99,235,${(1 - d / 120) * 0.25})`;
-            ctx.lineWidth = 0.8;
+            ctx.strokeStyle = `rgba(37,99,235,${(1 - d / LINK_DIST) * 0.25})`;
             ctx.stroke();
           }
         }
       }
 
-      // Nodes
-      nodes.forEach((p) => {
+      ctx.fillStyle = "rgba(37,99,235,0.55)";
+      for (const p of nodes) {
         ctx.beginPath();
-        ctx.arc(
-          p.x,
-          p.y,
-          p.r + Math.sin(t * 2 + p.x) * 0.5,
-          0,
-          Math.PI * 2
-        );
-        ctx.fillStyle = "rgba(37,99,235,0.55)";
+        ctx.arc(p.x, p.y, p.r + Math.sin(t * 2 + p.x) * 0.5, 0, Math.PI * 2);
         ctx.fill();
-      });
-
-      animId = requestAnimationFrame(draw);
+      }
     }
 
-    window.addEventListener("resize", resize, { passive: true });
+    function frame() {
+      render(true);
+      animId = requestAnimationFrame(frame);
+    }
+
+    function start() {
+      if (running || reduceMotion) return;
+      running = true;
+      animId = requestAnimationFrame(frame);
+    }
+
+    function stop() {
+      if (!running) return;
+      running = false;
+      cancelAnimationFrame(animId);
+    }
+
     resize();
-    draw();
+
+    if (reduceMotion) {
+      // One static frame: the texture is kept, the motion is not.
+      render(false);
+    }
+
+    /* Suspend once the hero is fully off-screen. rootMargin keeps it alive
+       just past the fold so scrolling back up never reveals a frozen canvas. */
+    let inView = false;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        inView = entry.isIntersecting;
+        if (inView && !document.hidden) start();
+        else stop();
+      },
+      { rootMargin: "200px" }
+    );
+    io.observe(canvas);
+
+    /* Backgrounded tabs already throttle rAF, but they do not stop it. Pausing
+       explicitly means a hero left open in a background tab costs nothing. */
+    const onVisibility = () => {
+      if (document.hidden) stop();
+      else if (inView) start();
+    };
+
+    window.addEventListener("resize", resize, { passive: true });
+    document.addEventListener("visibilitychange", onVisibility);
 
     return () => {
+      stop();
+      io.disconnect();
       window.removeEventListener("resize", resize);
-      cancelAnimationFrame(animId);
+      document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
+      aria-hidden="true"
       className="absolute inset-0 z-0 w-full h-full"
     />
   );
@@ -155,14 +185,15 @@ function HeroCanvas({
 
 
 export function Hero({ onOpenDemo }: { onOpenDemo?: () => void }) {
-  const [mousePos, setMousePos] = useState({ mx: 0.5, my: 0.5 });
+  const { openDemo } = useDemo();
+  const handleOpenDemo = onOpenDemo ?? openDemo;
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const mx = (e.clientX - rect.left) / rect.width;
-    const my = (e.clientY - rect.top) / rect.height;
-    setMousePos({ mx, my });
-  };
+  /* There used to be a `mousePos` state here, updated on every mousemove over
+     the hero and passed to HeroCanvas. HeroCanvas never read it — its effect
+     had an empty dependency array — so the only thing it did was re-render the
+     entire hero subtree on every pointer movement across the largest section
+     of the page. Removed rather than wired up: the canvas reads better as
+     ambient background than as something that chases the cursor. */
 
   const handleScrollToPlatform = () => {
     const target = document.getElementById("platform");
@@ -179,10 +210,9 @@ export function Hero({ onOpenDemo }: { onOpenDemo?: () => void }) {
         background:
           "linear-gradient(115deg, #F0F7F3 0%, #EFF5FF 42%, #E1EBFC 100%)",
       }}
-      onMouseMove={handleMouseMove}
     >
       {/* Background Canvas */}
-      <HeroCanvas mousePos={mousePos} />
+      <HeroCanvas />
 
       {/* Main Content Area */}
       <div className="relative z-10 page-container w-full h-full flex items-center pb-[200px] sm:pb-[220px] lg:pb-[260px] pt-[120px] lg:pt-[140px]">
@@ -232,7 +262,7 @@ export function Hero({ onOpenDemo }: { onOpenDemo?: () => void }) {
               className="flex flex-wrap gap-4 mb-10"
             >
               <button
-                onClick={onOpenDemo}
+                onClick={handleOpenDemo}
                 className="group relative overflow-hidden bg-brand-teal px-8 py-4 rounded-full text-[15px] font-semibold text-white shadow-lg shadow-brand-teal/20 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-brand-teal/30 active:translate-y-0"
               >
                 <span className="relative z-10 flex items-center gap-2">

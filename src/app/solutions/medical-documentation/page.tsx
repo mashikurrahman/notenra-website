@@ -4,7 +4,7 @@ import { useState } from "react";
 import { UserCheck, FileCheck2, ShieldCheck } from "lucide-react";
 import { Header } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
-import { DemoModal } from "@/components/demo-modal/DemoModal";
+import { LazyDemoModal } from "@/components/demo-modal/LazyDemoModal";
 import { CtaSection } from "@/components/cta-section/CtaSection";
 import { RelatedSolutions } from "@/components/solutions/RelatedSolutions";
 import { DocHero } from "@/components/solutions/medical-documentation/DocHero";
@@ -52,7 +52,7 @@ export default function MedicalDocumentationPage() {
       />
 
       <Footer />
-      <DemoModal isOpen={isDemoModalOpen} onClose={handleCloseDemo} />
+      <LazyDemoModal isOpen={isDemoModalOpen} onClose={handleCloseDemo} />
     </main>
   );
 }

@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 import { Header } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
-import { DemoModal } from "@/components/demo-modal/DemoModal";
+import { LazyDemoModal } from "@/components/demo-modal/LazyDemoModal";
 
 interface FaqItem {
   q: string;
@@ -769,7 +769,7 @@ export function PricingClientPage() {
       </section>
 
       <Footer />
-      <DemoModal isOpen={isDemoModalOpen} onClose={handleCloseDemo} />
+      <LazyDemoModal isOpen={isDemoModalOpen} onClose={handleCloseDemo} />
     </main>
   );
 }

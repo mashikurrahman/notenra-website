@@ -29,7 +29,7 @@ import {
 import { Header } from "@/components/header/Header";
 import { CtaSection } from "@/components/cta-section/CtaSection";
 import { Footer } from "@/components/footer/Footer";
-import { DemoModal } from "@/components/demo-modal/DemoModal";
+import { LazyDemoModal } from "@/components/demo-modal/LazyDemoModal";
 
 interface FaqItem {
   q: string;
@@ -193,6 +193,7 @@ export function SecurityClientPage() {
                   src="/images/security-clinic.jpg"
                   alt="Physician showing secure digital clinical data on tablet to patient"
                   fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover scale-105"
                   priority
                 />
@@ -723,7 +724,7 @@ export function SecurityClientPage() {
       />
 
       <Footer />
-      <DemoModal isOpen={isDemoModalOpen} onClose={handleCloseDemo} />
+      <LazyDemoModal isOpen={isDemoModalOpen} onClose={handleCloseDemo} />
     </main>
   );
 }

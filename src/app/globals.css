@@ -72,7 +72,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    font-family: var(--font-jakarta), var(--font-manrope), system-ui, -apple-system, sans-serif;
+    font-family: var(--font-jakarta), system-ui, -apple-system, sans-serif;
     color: #0B1B3A;
     background-color: #FFFFFF;
     -webkit-font-smoothing: antialiased;
@@ -180,6 +180,50 @@
 }
 
 /* ============================================================
+   SCROLL REVEAL
+
+   Backs the <Reveal> component. Only opacity and transform are
+   animated, so the whole thing stays on the compositor and never
+   triggers layout — which is what framer-motion was doing here
+   too, just with 124 KB of JS to decide it.
+
+   `will-change` is deliberately absent: these are one-shot and
+   there can be dozens per page, so permanently promoting every
+   one of them to its own layer costs more memory than the
+   animation saves.
+   ============================================================ */
+
+.reveal {
+  opacity: 0;
+  transition:
+    opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-up { transform: translateY(24px); }
+.reveal-down { transform: translateY(-24px); }
+.reveal-left { transform: translateX(24px); }
+.reveal-right { transform: translateX(-24px); }
+.reveal-none { transform: none; }
+
+.reveal-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* The component also checks this and shows content immediately, but the
+   CSS guard matters for the window between first paint and hydration:
+   without it, a reduced-motion user would see a translated, transparent
+   page until the JS lands. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ============================================================
    ANIMATION
    ============================================================ */
 
@@ -231,11 +275,55 @@
   animation-play-state: paused;
 }
 
+/* --- Motto pipeline diagram -------------------------------------
+   These four were framer-motion `animate` loops with `repeat: Infinity`.
+   Nothing about them is stateful or interactive — they are ambient decoration
+   — so running them through a JS animation loop bought nothing and forced the
+   whole section to be a client component. */
+
+@keyframes dashFlow {
+  to { stroke-dashoffset: -20; }
+}
+
+.animate-dash-flow {
+  animation: dashFlow 1s linear infinite;
+}
+
+@keyframes ringPulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.5); opacity: 0; }
+}
+
+@keyframes ringPulseInner {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.2); opacity: 0.2; }
+}
+
+.animate-ring-pulse {
+  animation: ringPulse 2s ease-in-out infinite;
+}
+
+.animate-ring-pulse-inner {
+  animation: ringPulseInner 2s ease-in-out infinite 0.5s;
+}
+
+@keyframes spinSlow {
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 8s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-float,
   .animate-pulse-glow,
   .animate-audio-wave,
-  .animate-marquee {
+  .animate-marquee,
+  .animate-dash-flow,
+  .animate-ring-pulse,
+  .animate-ring-pulse-inner,
+  .animate-spin-slow {
     animation: none;
   }
 }

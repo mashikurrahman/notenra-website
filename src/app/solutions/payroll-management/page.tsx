@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Calculator, Eye, ShieldCheck } from "lucide-react";
 import { Header } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
-import { DemoModal } from "@/components/demo-modal/DemoModal";
+import { LazyDemoModal } from "@/components/demo-modal/LazyDemoModal";
 import { CtaSection } from "@/components/cta-section/CtaSection";
 import { RelatedSolutions } from "@/components/solutions/RelatedSolutions";
 import { PayrollHero } from "@/components/solutions/payroll-management/PayrollHero";
@@ -56,7 +56,7 @@ export default function PayrollManagementPage() {
       />
 
       <Footer />
-      <DemoModal isOpen={isDemoModalOpen} onClose={handleCloseDemo} />
+      <LazyDemoModal isOpen={isDemoModalOpen} onClose={handleCloseDemo} />
     </main>
   );
 }

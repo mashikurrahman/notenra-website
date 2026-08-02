@@ -1,5 +1,3 @@
-"use client";
-
 import { Building2 } from "lucide-react";
 
 /* Stats moved to StatsFloat, which straddles the hero seam above.

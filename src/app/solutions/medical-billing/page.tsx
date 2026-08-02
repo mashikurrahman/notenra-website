@@ -4,7 +4,7 @@ import { useState } from "react";
 import { SearchCheck, ShieldCheck, LineChart } from "lucide-react";
 import { Header } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
-import { DemoModal } from "@/components/demo-modal/DemoModal";
+import { LazyDemoModal } from "@/components/demo-modal/LazyDemoModal";
 import { CtaSection } from "@/components/cta-section/CtaSection";
 import { RelatedSolutions } from "@/components/solutions/RelatedSolutions";
 import { BillingHero } from "@/components/solutions/medical-billing/BillingHero";
@@ -56,7 +56,7 @@ export default function MedicalBillingPage() {
       />
 
       <Footer />
-      <DemoModal isOpen={isDemoModalOpen} onClose={handleCloseDemo} />
+      <LazyDemoModal isOpen={isDemoModalOpen} onClose={handleCloseDemo} />
     </main>
   );
 }

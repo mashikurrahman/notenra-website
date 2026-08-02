@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useDemo } from "@/components/demo-modal/DemoProvider";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
@@ -16,7 +17,9 @@ interface Assurance {
 }
 
 interface CtaSectionProps {
-  onOpenDemo: () => void;
+  /* Optional: falls back to <DemoProvider> context, which is what lets the
+     pages rendering this stay server components. */
+  onOpenDemo?: () => void;
   /** Small label above the headline — grounds the CTA in the page it closes. */
   eyebrow?: string;
   headline: string;
@@ -58,6 +61,8 @@ export function CtaSection({
   assurances = DEFAULT_ASSURANCES,
   tone = "white",
 }: CtaSectionProps) {
+  const { openDemo } = useDemo();
+  const handleOpenDemo = onOpenDemo ?? openDemo;
   const SecondaryIcon = secondary.icon ?? Stethoscope;
 
   return (
@@ -94,7 +99,7 @@ export function CtaSection({
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
               <button
-                onClick={onOpenDemo}
+                onClick={handleOpenDemo}
                 className="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-teal text-white text-[15px] font-bold shadow-md hover:bg-brand-teal-deep hover:-translate-y-[2px] transition-all flex items-center justify-center gap-2 group"
               >
                 {primaryLabel}

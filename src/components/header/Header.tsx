@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Logo } from "@/components/ui/Logo";
+import { useDemo } from "@/components/demo-modal/DemoProvider";
 import {
   Menu,
   X,
@@ -16,7 +17,10 @@ import {
 } from "lucide-react";
 
 interface HeaderProps {
-  onOpenDemo: () => void;
+  /* Optional. Pages under <DemoProvider> can omit it and the header will pull
+     the opener from context, which is what lets those pages stay server
+     components. Kept as a prop so pages not yet migrated keep working. */
+  onOpenDemo?: () => void;
 }
 
 const SIGN_IN_URL = "https://app.notenra.com/login";
@@ -62,6 +66,9 @@ const SHRINK_AT = 28;
 const EXPAND_AT = 8;
 
 export function Header({ onOpenDemo }: HeaderProps) {
+  const { openDemo } = useDemo();
+  const handleOpenDemo = onOpenDemo ?? openDemo;
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false);
   const [solutionsOpen, setSolutionsOpen] = useState(false);
@@ -197,7 +204,7 @@ export function Header({ onOpenDemo }: HeaderProps) {
           </a>
           <div className="h-4 w-px bg-slate-200" aria-hidden="true" />
           <button
-            onClick={onOpenDemo}
+            onClick={handleOpenDemo}
             className="px-5 py-2.5 rounded-full bg-brand-teal text-white text-xs font-bold uppercase tracking-wider shadow-md hover:shadow-lg hover:bg-brand-teal-deep hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 group"
           >
             <span>Book Demo</span>
@@ -215,7 +222,7 @@ export function Header({ onOpenDemo }: HeaderProps) {
             Sign in
           </a>
           <button
-            onClick={onOpenDemo}
+            onClick={handleOpenDemo}
             className="px-3.5 py-1.5 rounded-full bg-brand-teal text-white text-xs font-bold"
           >
             Demo
@@ -313,7 +320,7 @@ export function Header({ onOpenDemo }: HeaderProps) {
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);
-                    onOpenDemo();
+                    handleOpenDemo();
                   }}
                   className="w-full py-3 rounded-xl bg-brand-teal text-white font-bold text-sm shadow-md text-center flex items-center justify-center gap-2"
                 >
