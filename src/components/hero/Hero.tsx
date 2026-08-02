@@ -174,7 +174,7 @@ export function Hero({ onOpenDemo }: { onOpenDemo?: () => void }) {
   return (
     <section
       id="hero"
-      className="relative flex items-center justify-center w-full min-h-[760px] lg:min-h-[820px] lg:h-screen"
+      className="relative flex items-center justify-center w-full min-h-[820px] lg:min-h-[960px]"
       style={{
         background:
           "linear-gradient(115deg, #F0F7F3 0%, #EFF5FF 42%, #E1EBFC 100%)",
@@ -185,7 +185,7 @@ export function Hero({ onOpenDemo }: { onOpenDemo?: () => void }) {
       <HeroCanvas mousePos={mousePos} />
 
       {/* Main Content Area */}
-      <div className="relative z-10 page-container w-full h-full flex items-center pb-[120px] sm:pb-[130px] lg:pb-[160px] pt-[120px] lg:pt-[140px]">
+      <div className="relative z-10 page-container w-full h-full flex items-center pb-[200px] sm:pb-[220px] lg:pb-[260px] pt-[120px] lg:pt-[140px]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center w-full">
           {/* Left: Text */}
           <div>
@@ -309,7 +309,7 @@ export function Hero({ onOpenDemo }: { onOpenDemo?: () => void }) {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.5 }}
-        className="absolute z-20 bg-white/95 border border-brand-teal/15 rounded-3xl shadow-[0_24px_70px_rgba(11,27,58,0.16)] px-6 py-6 md:px-9 md:py-7 left-1/2 -translate-x-1/2 w-[min(860px,calc(100%-48px))] bottom-[-80px] sm:bottom-[-40px]"
+        className="absolute z-20 bg-white/95 border border-brand-teal/15 rounded-3xl shadow-[0_24px_70px_rgba(11,27,58,0.16)] px-6 py-6 md:px-9 md:py-7 left-1/2 -translate-x-1/2 w-[min(860px,calc(100%-48px))] bottom-[-60px] lg:bottom-[-30px]"
       >
         <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
           <div className="md:min-w-[230px]">
