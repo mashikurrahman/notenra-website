@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
@@ -22,6 +22,8 @@ interface DemoModalProps {
 
 export function DemoModal({ isOpen, onClose }: DemoModalProps) {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -29,6 +31,20 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
     practiceSize: "2-5 Physicians",
     notes: "",
   });
+
+  /* Honeypot. Hidden from sight and from assistive tech, and skipped in the
+     tab order, so no real user can reach it — anything that fills it is
+     automated. Paired with the mount timestamp the server uses to reject
+     submissions completed impossibly fast. */
+  const [honeypot, setHoneypot] = useState("");
+
+  /* Stamped in an effect rather than during render: Date.now() is impure, and
+     a render-time call would also read the wrong moment under StrictMode's
+     double invoke. */
+  const startedAt = useRef<number | null>(null);
+  useEffect(() => {
+    startedAt.current = Date.now();
+  }, []);
 
   const specialties = [
     "Family Medicine",
@@ -50,23 +66,60 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
     "Healthcare Organization (50+)",
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (sending) return; // guard against a double-click submitting twice
 
-    /* Fetched on demand. The success state renders immediately either way —
-       the celebration is decorative, so a failed chunk load must never be able
-       to hold up the confirmation. */
-    import("canvas-confetti")
-      .then(({ default: confetti }) => {
-        confetti({
-          particleCount: 80,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: ["#2563EB", "#3B82F6", "#60A5FA", "#93C5FD"],
-        });
-      })
-      .catch(() => {});
+    setSending(true);
+    setError(null);
+
+    try {
+      const res = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "demo",
+          ...formData,
+          company: honeypot,
+          startedAt: startedAt.current,
+        }),
+      });
+
+      const data = await res.json().catch(() => ({ ok: false }));
+
+      /* The success screen is shown only once the server has confirmed the
+         lead. Previously this flipped unconditionally, so a visitor could be
+         told "Demo Confirmed" for a request that never went anywhere. */
+      if (!res.ok || !data.ok) {
+        setError(
+          data.error ??
+            "Something went wrong sending that. Please email hello@notenra.com."
+        );
+        return;
+      }
+
+      setSubmitted(true);
+
+      /* Fetched on demand. The success state renders either way — the
+         celebration is decorative, so a failed chunk load must never be able
+         to hold up the confirmation. */
+      import("canvas-confetti")
+        .then(({ default: confetti }) => {
+          confetti({
+            particleCount: 80,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ["#2563EB", "#3B82F6", "#60A5FA", "#93C5FD"],
+          });
+        })
+        .catch(() => {});
+    } catch {
+      setError(
+        "We couldn't reach the server. Please check your connection or email hello@notenra.com."
+      );
+    } finally {
+      setSending(false);
+    }
   };
 
   const handleReset = () => {
@@ -208,15 +261,51 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
                   }
                   className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-brand-ink focus:outline-none focus:ring-2 focus:ring-brand-teal focus:bg-white transition-all resize-none"
                 />
+                {/* This is the field most likely to attract patient detail from
+                    a clinician describing their workflow. This form is not a
+                    BAA-covered channel, so say so before they type. */}
+                <p className="mt-1.5 text-[11px] text-slate-500">
+                  Please don&apos;t include any patient information.
+                </p>
               </div>
+
+              {/* Honeypot: off-screen, untabbable, hidden from screen readers.
+                  Only a bot will ever put anything in it. */}
+              <div aria-hidden="true" className="absolute -left-[9999px] top-0">
+                <label htmlFor="demo-company-website">
+                  Company website (leave blank)
+                </label>
+                <input
+                  id="demo-company-website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                />
+              </div>
+
+              {error && (
+                <div
+                  role="alert"
+                  className="rounded-lg border border-red-200 bg-red-50 px-3.5 py-2.5 text-sm text-red-700"
+                >
+                  {error}
+                </div>
+              )}
 
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full py-3 px-6 rounded-lg surface-teal text-white font-semibold text-sm shadow-lg hover:shadow-md hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 group"
+                  disabled={sending}
+                  className="w-full py-3 px-6 rounded-lg surface-teal text-white font-semibold text-sm shadow-lg hover:shadow-md hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 group disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
-                  <span>Confirm Live Demo Booking</span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  <span>
+                    {sending ? "Sending…" : "Confirm Live Demo Booking"}
+                  </span>
+                  {!sending && (
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  )}
                 </button>
               </div>
 
@@ -234,27 +323,32 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
               <div className="w-16 h-16 bg-brand-aqua/20 border border-brand-aqua rounded-full flex items-center justify-center mx-auto text-brand-teal">
                 <CheckCircle2 className="w-9 h-9" />
               </div>
+              {/* Wording is now a commitment the business actually has to
+                  meet. The previous copy promised a callback "within 2 hours"
+                  and named a specific assigned physician who does not exist —
+                  fine while the form was a mock-up, a liability the moment real
+                  leads start arriving. */}
               <h4 className="text-2xl font-bold text-brand-ink">
-                Demo Confirmed!
+                Request received
               </h4>
               <p className="text-base text-slate-600 max-w-md mx-auto">
                 Thank you,{" "}
                 <strong className="text-brand-ink">
                   {formData.name || "Doctor"}
                 </strong>
-                . Our clinical workflow specialist has received your request for{" "}
-                <strong>{formData.specialty}</strong>. We will reach out to{" "}
+                . We have your request for{" "}
+                <strong>{formData.specialty}</strong> and will reply to{" "}
                 <span className="text-brand-teal">{formData.email}</span> within
-                2 hours.
+                one business day.
               </p>
               <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl max-w-sm mx-auto text-left space-y-2 text-xs text-slate-700">
                 <div className="flex items-center gap-2 font-medium text-brand-ink">
                   <Calendar className="w-4 h-4 text-brand-teal" />
-                  <span>Next Step: Calendar Invitation</span>
+                  <span>Next step: we&apos;ll send scheduling options</span>
                 </div>
                 <div className="flex items-center gap-2 font-medium text-brand-ink">
                   <UserCheck className="w-4 h-4 text-brand-teal" />
-                  <span>Assigned Clinical Expert: Dr. Marcus Vance, MD</span>
+                  <span>You&apos;ll be matched with a clinical specialist</span>
                 </div>
               </div>
               <button

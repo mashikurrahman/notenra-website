@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Header } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
 import { LazyDemoModal } from "@/components/demo-modal/LazyDemoModal";
@@ -12,6 +12,8 @@ export function ContactClientPage() {
   const handleCloseDemo = () => setIsDemoModalOpen(false);
 
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -19,9 +21,51 @@ export function ContactClientPage() {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  /* Same two-part bot check as the demo modal: a field no human can reach,
+     plus the time the form was mounted. See /api/lead. */
+  const [honeypot, setHoneypot] = useState("");
+  const startedAt = useRef<number | null>(null);
+  useEffect(() => {
+    startedAt.current = Date.now();
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (sending) return;
+
+    setSending(true);
+    setError(null);
+
+    try {
+      const res = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "contact",
+          ...form,
+          company: honeypot,
+          startedAt: startedAt.current,
+        }),
+      });
+
+      const data = await res.json().catch(() => ({ ok: false }));
+
+      if (!res.ok || !data.ok) {
+        setError(
+          data.error ??
+            "Something went wrong sending that. Please email hello@notenra.com."
+        );
+        return;
+      }
+
+      setSubmitted(true);
+    } catch {
+      setError(
+        "We couldn't reach the server. Please check your connection or email hello@notenra.com."
+      );
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -109,12 +153,42 @@ export function ContactClientPage() {
                     />
                   </div>
 
+                  {/* Honeypot: off-screen, untabbable, hidden from AT. */}
+                  <div
+                    aria-hidden="true"
+                    className="absolute -left-[9999px] top-0"
+                  >
+                    <label htmlFor="contact-company-website">
+                      Company website (leave blank)
+                    </label>
+                    <input
+                      id="contact-company-website"
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={honeypot}
+                      onChange={(e) => setHoneypot(e.target.value)}
+                    />
+                  </div>
+
+                  {error && (
+                    <div
+                      role="alert"
+                      className="rounded-lg border border-red-200 bg-red-50 px-3.5 py-2.5 text-sm text-red-700"
+                    >
+                      {error}
+                    </div>
+                  )}
+
                   <button
                     type="submit"
-                    className="w-full py-3 px-6 rounded-lg bg-brand-teal text-white font-semibold text-sm shadow-xs hover:bg-brand-teal-deep hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 group"
+                    disabled={sending}
+                    className="w-full py-3 px-6 rounded-lg bg-brand-teal text-white font-semibold text-sm shadow-xs hover:bg-brand-teal-deep hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 group disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
                   >
-                    <span>Send Message</span>
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                    <span>{sending ? "Sending…" : "Send Message"}</span>
+                    {!sending && (
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                    )}
                   </button>
                 </form>
               ) : (
