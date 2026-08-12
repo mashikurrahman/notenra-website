@@ -33,7 +33,7 @@ export function HeroCinematicVisual() {
           className="w-full h-full object-cover"
         />
         {/* Semi-transparent brand navy wash for high contrast & text readability */}
-        <div className="absolute inset-0 bg-[linear-gradient(150deg,rgba(11,27,58,0.85)_0%,rgba(19,45,85,0.9)_52%,rgba(11,27,58,0.85)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(150deg,rgba(11,27,58,0.45)_0%,rgba(19,45,85,0.5)_52%,rgba(11,27,58,0.45)_100%)]" />
       </div>
       <div
         className="absolute inset-0 opacity-[0.16]"
