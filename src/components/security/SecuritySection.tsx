@@ -111,7 +111,7 @@ export function SecuritySection() {
   return (
     <section
       id="security"
-      className="py-10 sm:py-16 bg-white border-b border-slate-200 overflow-hidden relative"
+      className="py-10 sm:py-16 bg-slate-50 border-b border-slate-200 overflow-hidden relative"
     >
       {/* Background ambient glow */}
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_top_right,rgba(37,99,235,0.03),transparent_50%)] pointer-events-none" />

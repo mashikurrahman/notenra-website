@@ -82,7 +82,7 @@ export function EhrCompatibility() {
   const current = ehrData[selectedEhr];
 
   return (
-    <section className="py-20 sm:py-24 bg-white border-b border-slate-200 relative overflow-hidden">
+    <section className="py-20 sm:py-24 bg-slate-50 border-b border-slate-200 relative overflow-hidden">
       <div className="page-container">
         <div className="max-w-4xl mx-auto text-center space-y-4 mb-16">
           <div className="text-[11px] font-bold tracking-[0.2em] uppercase text-brand-teal">

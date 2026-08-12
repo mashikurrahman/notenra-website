@@ -15,8 +15,6 @@ import { DemoProvider } from "@/components/demo-modal/DemoProvider";
 import { VisionSection } from "@/components/vision/VisionSection";
 import { MottoSection } from "@/components/motto/MottoSection";
 
-import { ScribeSimulator } from "@/components/sandbox/ScribeSimulator";
-
 /* Note the absence of "use client". This page used to carry it solely to hold
    the demo modal's useState, and that one hook pulled every section below it
    into the client bundle. The state now lives in <DemoProvider>, so sections
@@ -27,7 +25,6 @@ export default function Home() {
       <main className="min-h-screen flex flex-col bg-white text-brand-ink">
         <Header />
         <Hero />
-        <ScribeSimulator />
         <ProblemSection />
         <SocialProof />
         <FeatureGrid />
