@@ -41,14 +41,14 @@ const securityCards = [
  */
 function MedicalSecurityVisual() {
   return (
-    <div className="relative w-full h-full min-h-[340px] lg:min-h-[440px] flex items-center justify-center">
+    <div className="relative w-full h-full min-h-[280px] lg:min-h-[340px] flex items-center justify-center">
       {/* Background ECG Pulse */}
       <div className="absolute inset-0 flex items-center justify-center opacity-[0.04]">
         <Activity className="w-full h-full min-h-[350px] text-brand-ink" />
       </div>
 
       {/* Orbiting Elements */}
-      <div className="absolute w-[260px] h-[260px] lg:w-[380px] lg:h-[380px] rounded-full border border-brand-teal/20 border-dashed animate-[spin_25s_linear_infinite]">
+      <div className="absolute w-[220px] h-[220px] lg:w-[300px] lg:h-[300px] rounded-full border border-brand-teal/20 border-dashed animate-[spin_25s_linear_infinite]">
         {/* Node 1: Audio */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 lg:w-16 lg:h-16 bg-white rounded-xl border border-slate-200 shadow-md flex items-center justify-center animate-[spin_25s_linear_infinite_reverse]">
           <FileAudio className="w-5 h-5 lg:w-7 lg:h-7 text-brand-teal" />
@@ -79,7 +79,7 @@ function MedicalSecurityVisual() {
       <motion.div
         animate={{ rotate: 360 }}
         transition={{ duration: 4, ease: "linear", repeat: Infinity }}
-        className="absolute w-[260px] h-[260px] lg:w-[380px] lg:h-[380px] rounded-full opacity-60"
+        className="absolute w-[220px] h-[220px] lg:w-[300px] lg:h-[300px] rounded-full opacity-60"
         style={{
           background: "conic-gradient(from 0deg, transparent 70%, rgba(37,99,235,0.08) 100%)",
         }}
@@ -88,7 +88,7 @@ function MedicalSecurityVisual() {
       </motion.div>
 
       {/* Center EHR Vault */}
-      <div className="relative z-10 w-24 h-24 lg:w-32 lg:h-32 rounded-2xl flex items-center justify-center bg-white shadow-xl border border-slate-100 p-2.5 lg:p-3.5">
+      <div className="relative z-10 w-20 h-20 lg:w-24 lg:h-24 rounded-2xl flex items-center justify-center bg-white shadow-xl border border-slate-100 p-2 lg:p-3">
         <div className="w-full h-full rounded-xl flex flex-col items-center justify-center relative overflow-hidden"
           style={{
             background: "linear-gradient(135deg, #0B1B3A, #2563EB)",
@@ -146,7 +146,7 @@ export function SecuritySection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-lg font-medium leading-relaxed mb-10 text-slate-500 max-w-lg"
+              className="text-base font-medium leading-relaxed mb-7 text-slate-500 max-w-lg"
             >
               Clinical data is the most sensitive information that exists.
               NOTENRA treats it accordingly — with architecture designed from
@@ -164,7 +164,7 @@ export function SecuritySection() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true }}
-              className="grid grid-cols-2 gap-5"
+              className="grid grid-cols-2 gap-3"
             >
               {securityCards.map((card) => {
                 const Icon = card.icon;
@@ -175,10 +175,10 @@ export function SecuritySection() {
                       show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
                     }}
                     key={card.title}
-                    className="glass-card rounded-[20px] p-6 border border-slate-200/60 bg-white/60 hover:bg-white hover:border-brand-teal/40 hover:-translate-y-1 transition-all shadow-xs hover:shadow-md cursor-default group"
+                    className="glass-card rounded-2xl p-4 border border-slate-200/60 bg-white/60 hover:bg-white hover:border-brand-teal/40 hover:-translate-y-1 transition-all shadow-xs hover:shadow-md cursor-default group"
                   >
                     <div
-                      className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
+                      className="w-9 h-9 rounded-lg flex items-center justify-center mb-3 transition-transform group-hover:scale-110"
                       style={{ background: card.iconBg }}
                     >
                       <Icon
@@ -186,10 +186,10 @@ export function SecuritySection() {
                         style={{ color: card.iconColor }}
                       />
                     </div>
-                    <p className="font-bold text-base text-brand-ink mb-1">
+                    <p className="font-bold text-sm text-brand-ink mb-0.5">
                       {card.title}
                     </p>
-                    <p className="text-sm font-medium text-slate-500 leading-relaxed">
+                    <p className="text-xs font-medium text-slate-500 leading-relaxed">
                       {card.description}
                     </p>
                   </motion.div>
@@ -204,9 +204,9 @@ export function SecuritySection() {
             whileInView={{ opacity: 1, scale: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="flex items-center justify-center lg:absolute lg:right-[-10%] lg:top-1/2 lg:-translate-y-1/2 pointer-events-none"
+            className="flex items-center justify-center lg:justify-end pointer-events-none"
           >
-            <div className="relative w-full max-w-[350px] lg:max-w-none lg:w-[500px] lg:h-[500px]">
+            <div className="relative w-full max-w-[320px] lg:max-w-[380px]">
               <MedicalSecurityVisual />
             </div>
           </motion.div>
