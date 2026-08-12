@@ -14,6 +14,8 @@ import { CodeSets } from "@/components/solutions/medical-coding/CodeSets";
 import { QualityAssurance } from "@/components/solutions/medical-coding/QualityAssurance";
 import { CodingFaq } from "@/components/solutions/medical-coding/CodingFaq";
 
+import { IcdAutocomplete } from "@/components/solutions/medical-coding/IcdAutocomplete";
+
 export default function MedicalCodingPage() {
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
 
@@ -22,6 +24,7 @@ export default function MedicalCodingPage() {
       <Header onOpenDemo={() => setIsDemoModalOpen(true)} />
       <CodingHero onOpenDemo={() => setIsDemoModalOpen(true)} />
       <CodingWorkflow />
+      <IcdAutocomplete />
       <CodingBenefits />
       <CodeSets />
       <QualityAssurance />

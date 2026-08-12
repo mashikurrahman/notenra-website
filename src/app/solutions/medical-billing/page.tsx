@@ -14,6 +14,8 @@ import { BillingServices } from "@/components/solutions/medical-billing/BillingS
 import { BillingWhyNotenra } from "@/components/solutions/medical-billing/BillingWhyNotenra";
 import { BillingFaq } from "@/components/solutions/medical-billing/BillingFaq";
 
+import { BillingLifecycle } from "@/components/solutions/medical-billing/BillingLifecycle";
+
 export default function MedicalBillingPage() {
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
   const handleOpenDemo = () => setIsDemoModalOpen(true);
@@ -25,6 +27,7 @@ export default function MedicalBillingPage() {
 
       <BillingHero onOpenDemo={handleOpenDemo} />
       <BillingProcess />
+      <BillingLifecycle />
       <BillingBenefits />
       <BillingServices />
       <BillingWhyNotenra />

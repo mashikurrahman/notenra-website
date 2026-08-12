@@ -10,7 +10,7 @@ import { RelatedSolutions } from "@/components/solutions/RelatedSolutions";
 import { PayrollHero } from "@/components/solutions/payroll-management/PayrollHero";
 import { PayrollProcess } from "@/components/solutions/payroll-management/PayrollProcess";
 import { PayrollBenefits } from "@/components/solutions/payroll-management/PayrollBenefits";
-import { PayrollModels } from "@/components/solutions/payroll-management/PayrollModels";
+import { RvuCalculator } from "@/components/solutions/payroll-management/RvuCalculator";
 import { PayrollWhyNotenra } from "@/components/solutions/payroll-management/PayrollWhyNotenra";
 import { PayrollFaq } from "@/components/solutions/payroll-management/PayrollFaq";
 
@@ -26,7 +26,7 @@ export default function PayrollManagementPage() {
       <PayrollHero onOpenDemo={handleOpenDemo} />
       <PayrollProcess />
       <PayrollBenefits />
-      <PayrollModels />
+      <RvuCalculator />
       <PayrollWhyNotenra />
       <PayrollFaq />
       <RelatedSolutions
