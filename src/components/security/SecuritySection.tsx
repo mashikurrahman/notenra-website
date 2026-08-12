@@ -41,14 +41,14 @@ const securityCards = [
  */
 function MedicalSecurityVisual() {
   return (
-    <div className="relative w-full h-full min-h-[460px] lg:min-h-[600px] flex items-center justify-center">
+    <div className="relative w-full h-full min-h-[340px] lg:min-h-[440px] flex items-center justify-center">
       {/* Background ECG Pulse */}
       <div className="absolute inset-0 flex items-center justify-center opacity-[0.04]">
         <Activity className="w-full h-full min-h-[350px] text-brand-ink" />
       </div>
 
       {/* Orbiting Elements */}
-      <div className="absolute w-[300px] h-[300px] lg:w-[480px] lg:h-[480px] rounded-full border border-brand-teal/20 border-dashed animate-[spin_25s_linear_infinite]">
+      <div className="absolute w-[260px] h-[260px] lg:w-[380px] lg:h-[380px] rounded-full border border-brand-teal/20 border-dashed animate-[spin_25s_linear_infinite]">
         {/* Node 1: Audio */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 lg:w-16 lg:h-16 bg-white rounded-xl border border-slate-200 shadow-md flex items-center justify-center animate-[spin_25s_linear_infinite_reverse]">
           <FileAudio className="w-5 h-5 lg:w-7 lg:h-7 text-brand-teal" />
@@ -79,7 +79,7 @@ function MedicalSecurityVisual() {
       <motion.div
         animate={{ rotate: 360 }}
         transition={{ duration: 4, ease: "linear", repeat: Infinity }}
-        className="absolute w-[300px] h-[300px] lg:w-[480px] lg:h-[480px] rounded-full opacity-60"
+        className="absolute w-[260px] h-[260px] lg:w-[380px] lg:h-[380px] rounded-full opacity-60"
         style={{
           background: "conic-gradient(from 0deg, transparent 70%, rgba(37,99,235,0.08) 100%)",
         }}
@@ -111,7 +111,7 @@ export function SecuritySection() {
   return (
     <section
       id="security"
-      className="py-10 sm:py-16 bg-slate-50 border-b border-slate-200 overflow-hidden relative"
+      className="py-14 sm:py-18 bg-slate-50 border-b border-slate-200 overflow-hidden relative"
     >
       {/* Background ambient glow */}
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_top_right,rgba(37,99,235,0.03),transparent_50%)] pointer-events-none" />
@@ -206,7 +206,7 @@ export function SecuritySection() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="flex items-center justify-center lg:absolute lg:right-[-10%] lg:top-1/2 lg:-translate-y-1/2 pointer-events-none"
           >
-            <div className="relative w-full max-w-[400px] lg:max-w-none lg:w-[650px] lg:h-[650px]">
+            <div className="relative w-full max-w-[350px] lg:max-w-none lg:w-[500px] lg:h-[500px]">
               <MedicalSecurityVisual />
             </div>
           </motion.div>

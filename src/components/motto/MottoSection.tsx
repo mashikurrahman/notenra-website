@@ -3,7 +3,7 @@ import { Reveal } from "@/components/ui/Reveal";
 
 export function MottoSection() {
   return (
-    <section className="py-20 sm:py-32 bg-slate-50 border-y border-slate-200 overflow-hidden relative">
+    <section className="py-16 sm:py-20 bg-slate-50 border-y border-slate-200 overflow-hidden relative">
       {/* The logo-reveal video lived here briefly. It moved to CtaSection,
           which directly follows this section on the homepage — running the
           same loop in two adjacent sections read as a mistake rather than a
@@ -22,22 +22,22 @@ export function MottoSection() {
             </Reveal>
 
             <Reveal delay={100}>
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-ink tracking-tight leading-[1.1] mb-6">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-brand-ink tracking-tight leading-[1.1] mb-5">
                 We handle the data. <br className="hidden lg:block" />
                 <span className="text-brand-teal">You handle the care.</span>
               </h2>
             </Reveal>
 
             <Reveal delay={200}>
-              <p className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-xl mx-auto lg:mx-0">
-                The administrative burden in healthcare is unsustainable. Our AI operates silently in the background, fully automating documentation, coding, and billing—so your physicians can focus 100% on their patients.
+              <p className="text-base text-slate-600 leading-relaxed max-w-lg mx-auto lg:mx-0">
+                Our AI operates silently in the background, fully automating documentation, coding, and billing — so your physicians can focus on their patients.
               </p>
             </Reveal>
           </div>
 
           {/* Right Side: Advanced Pipeline Visualization */}
           <div className="flex-1 w-full relative">
-            <div className="w-full aspect-square md:aspect-auto md:h-[500px] relative flex items-center justify-center">
+            <div className="w-full aspect-square md:aspect-auto md:h-[380px] relative flex items-center justify-center">
               
               {/* Background glows */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">

@@ -14,6 +14,7 @@ import { Footer } from "@/components/footer/Footer";
 import { DemoProvider } from "@/components/demo-modal/DemoProvider";
 import { VisionSection } from "@/components/vision/VisionSection";
 import { MottoSection } from "@/components/motto/MottoSection";
+import { ResultsStrip } from "@/components/results/ResultsStrip";
 
 /* Note the absence of "use client". This page used to carry it solely to hold
    the demo modal's useState, and that one hook pulled every section below it
@@ -35,6 +36,7 @@ export default function Home() {
         <EhrCompatibility />
         <HowItWorks />
         <SecuritySection />
+        <ResultsStrip />
         <MottoSection />
         {/* Homepage closes on the platform-wide promise: time returned. */}
         <CtaSection
