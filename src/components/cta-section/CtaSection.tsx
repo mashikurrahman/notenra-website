@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useDemo } from "@/components/demo-modal/DemoProvider";
+import { BackgroundVideo } from "@/components/ui/BackgroundVideo";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
@@ -73,9 +74,34 @@ export function CtaSection({
     >
       <div className="page-container">
         <div className="bg-white border border-slate-200 p-10 sm:p-16 lg:p-20 rounded-[40px] text-center relative z-10 shadow-xs overflow-hidden">
+          {/* Brand reveal, looping behind the closing call to action.
+
+              It goes inside this card rather than behind the section, because
+              the card is opaque white and full-bleed within the container —
+              a video on the section would only ever show in the margin around
+              it, which reads as a framing accident rather than a background.
+
+              The card's `overflow-hidden` and rounded-[40px] clip it, so the
+              motion is contained by the CTA's own shape. */}
+          <div className="absolute inset-0 pointer-events-none">
+            <BackgroundVideo
+              src="/video/logo-reveal.mp4"
+              poster="/video/logo-reveal-poster.jpg"
+              loop
+            />
+          </div>
+
+          {/* Scrim — the single knob for how strongly the video reads. At /82
+              the video contributes ~18%, which holds body copy at 4.70:1
+              against the video's darkest frame (the navy wordmark), above the
+              4.5:1 AA floor. The budget runs out at /80; do not go lower
+              without re-checking the slate-600 subhead. White gives slightly
+              more headroom here than slate-50 did elsewhere. */}
+          <div className="absolute inset-0 pointer-events-none bg-white/82" />
+
           {/* Subtle inside gradient background */}
           <div className="absolute inset-0 pointer-events-none opacity-40 bg-[radial-gradient(circle_at_top_right,rgba(63,164,106,0.06),transparent_50%)]" />
-          
+
           <div className="max-w-3xl mx-auto space-y-8 relative z-20">
             {eyebrow && (
               <span className="block text-[11px] font-bold uppercase tracking-[0.2em] text-brand-teal mb-4">

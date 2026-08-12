@@ -8,11 +8,14 @@ import { SpecialtiesSection } from "@/components/specialties/SpecialtiesSection"
 import { HowItWorks } from "@/components/how-it-works/HowItWorks";
 import { SecuritySection } from "@/components/security/SecuritySection";
 import { BentoGrid } from "@/components/bento-grid/BentoGrid";
+import { EhrCompatibility } from "@/components/solutions/EhrCompatibility";
 import { CtaSection } from "@/components/cta-section/CtaSection";
 import { Footer } from "@/components/footer/Footer";
 import { DemoProvider } from "@/components/demo-modal/DemoProvider";
 import { VisionSection } from "@/components/vision/VisionSection";
 import { MottoSection } from "@/components/motto/MottoSection";
+
+import { ScribeSimulator } from "@/components/sandbox/ScribeSimulator";
 
 /* Note the absence of "use client". This page used to carry it solely to hold
    the demo modal's useState, and that one hook pulled every section below it
@@ -24,6 +27,7 @@ export default function Home() {
       <main className="min-h-screen flex flex-col bg-white text-brand-ink">
         <Header />
         <Hero />
+        <ScribeSimulator />
         <ProblemSection />
         <SocialProof />
         <FeatureGrid />
@@ -31,6 +35,7 @@ export default function Home() {
         <AiSection />
         <SpecialtiesSection tone="grey" />
         <BentoGrid />
+        <EhrCompatibility />
         <HowItWorks />
         <SecuritySection />
         <MottoSection />

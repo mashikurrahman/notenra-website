@@ -4,8 +4,12 @@ import { Reveal } from "@/components/ui/Reveal";
 export function MottoSection() {
   return (
     <section className="py-20 sm:py-32 bg-slate-50 border-y border-slate-200 overflow-hidden relative">
+      {/* The logo-reveal video lived here briefly. It moved to CtaSection,
+          which directly follows this section on the homepage — running the
+          same loop in two adjacent sections read as a mistake rather than a
+          motif. */}
       <div className="absolute inset-0 bg-grid-slate-200/50 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]" />
-      
+
       <div className="page-container relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
           

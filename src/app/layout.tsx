@@ -4,6 +4,9 @@ import "./globals.css";
 import { buildMetadata, generateStructuredData } from "@/lib/seo";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
 
+import { BrandPreloader } from "@/components/ui/BrandPreloader";
+import { PageProgressBar } from "@/components/ui/PageProgressBar";
+
 /* Manrope used to be loaded here as a second family. Nothing ever rendered in
    it — it sat behind Jakarta in the font-family chain, and Jakarta covers
    latin, so the fallback never fired. That was four woff2 files fetched on
@@ -51,6 +54,8 @@ export default function RootLayout({
         className="min-h-screen flex flex-col bg-white text-brand-ink selection:bg-brand-aqua/30 selection:text-brand-ink"
         suppressHydrationWarning
       >
+        <BrandPreloader />
+        <PageProgressBar />
         {children}
         {/* Rendered once here so every route gets it, including /_not-found */}
         <ScrollToTop />

@@ -638,6 +638,53 @@ export function PricingClientPage() {
                   <div className="text-base font-bold text-brand-ink">{adminReduction}</div>
                 </div>
               </div>
+
+              {/* Animated Charting Time Comparison */}
+              <div className="pt-4 border-t border-slate-100 space-y-3">
+                <div className="text-[9px] text-slate-400 font-bold uppercase tracking-wider">
+                  Monthly Charting Hours
+                </div>
+                
+                <div className="space-y-2.5 text-[11px]">
+                  {/* Manual Bar */}
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-slate-500 font-semibold">
+                      <span>Manual Charting</span>
+                      <span className="font-bold text-slate-700">{Math.round((notesCount * 9) / 60)} hrs</span>
+                    </div>
+                    <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                      <motion.div 
+                        initial={{ width: 0 }}
+                        animate={{ width: "100%" }}
+                        transition={{ duration: 0.3 }}
+                        className="h-full bg-slate-300 rounded-full"
+                      />
+                    </div>
+                  </div>
+
+                  {/* With NOTENRA Bar */}
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-brand-teal font-semibold">
+                      <span>With NOTENRA</span>
+                      <span className="font-bold">{Math.round((notesCount * (calcWorkflow === "hybrid" ? 4 : 2.5)) / 60)} hrs</span>
+                    </div>
+                    <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                      <motion.div 
+                        initial={{ width: 0 }}
+                        animate={{ 
+                          width: `${((notesCount * (calcWorkflow === "hybrid" ? 4 : 2.5)) / (notesCount * 9)) * 100}%` 
+                        }}
+                        transition={{ duration: 0.3 }}
+                        className="h-full bg-gradient-to-r from-brand-teal to-brand-teal-deep rounded-full"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-[10px] text-slate-500 italic mt-2 text-center font-normal">
+                  Saves around {Math.round((notesCount * (calcWorkflow === "hybrid" ? 5 : 6.5)) / 60)} clinical hours every month!
+                </p>
+              </div>
             </div>
           </div>
         </div>
