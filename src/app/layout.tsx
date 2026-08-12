@@ -4,7 +4,6 @@ import "./globals.css";
 import { buildMetadata, generateStructuredData } from "@/lib/seo";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
 
-import { BrandPreloader } from "@/components/ui/BrandPreloader";
 import { PageProgressBar } from "@/components/ui/PageProgressBar";
 
 /* Manrope used to be loaded here as a second family. Nothing ever rendered in
@@ -54,7 +53,6 @@ export default function RootLayout({
         className="min-h-screen flex flex-col bg-white text-brand-ink selection:bg-brand-aqua/30 selection:text-brand-ink"
         suppressHydrationWarning
       >
-        <BrandPreloader />
         <PageProgressBar />
         {children}
         {/* Rendered once here so every route gets it, including /_not-found */}
