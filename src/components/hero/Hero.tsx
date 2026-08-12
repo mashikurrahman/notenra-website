@@ -301,28 +301,15 @@ export function Hero({ onOpenDemo }: { onOpenDemo?: () => void }) {
             </motion.div>
           </div>
 
-          {/* Right: Cinematic Visual Overlay with Clinical Background Photo */}
+          {/* Right: Cinematic Visual Overlay */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
             className="hidden lg:flex items-center justify-center w-full"
           >
-            <div className="relative w-full max-w-[540px] p-6">
-              {/* Soft Clinical Background Photo Layer */}
-              <div className="absolute inset-0 z-0 opacity-15 rounded-[2.5rem] overflow-hidden blur-xs pointer-events-none">
-                <img
-                  src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=800&q=80"
-                  alt="Clinical consulting space"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#EFF5FF] to-transparent mix-blend-multiply" />
-              </div>
-
-              {/* Floating app interface visualizer */}
-              <div className="relative z-10">
-                <HeroCinematicVisual />
-              </div>
+            <div className="relative w-full max-w-[540px]">
+              <HeroCinematicVisual />
             </div>
           </motion.div>
         </div>

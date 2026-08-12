@@ -25,7 +25,16 @@ export function HeroCinematicVisual() {
       {/* Drawn backdrop: brand navy with depth from two blurred brand-colour
           pools and a fine dot grid, so the panel reads as a surface rather
           than a flat block. No image request, no LCP cost. */}
-      <div className="absolute inset-0 bg-[linear-gradient(150deg,#0B1B3A_0%,#132D55_52%,#0B1B3A_100%)]" />
+      {/* Authentic Editorial Clinical Background Image */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=800&q=80"
+          alt="Clinical consulting space"
+          className="w-full h-full object-cover"
+        />
+        {/* Semi-transparent brand navy wash for high contrast & text readability */}
+        <div className="absolute inset-0 bg-[linear-gradient(150deg,rgba(11,27,58,0.85)_0%,rgba(19,45,85,0.9)_52%,rgba(11,27,58,0.85)_100%)]" />
+      </div>
       <div
         className="absolute inset-0 opacity-[0.16]"
         style={{
